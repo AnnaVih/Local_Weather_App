@@ -1,2 +1,2 @@
-const greeting = 'Hello World';
-console.log(greeting);
+import { weatherData } from './weatherData';
+
