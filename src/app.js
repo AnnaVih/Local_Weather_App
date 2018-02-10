@@ -3,65 +3,61 @@
 //Importing classes
 import { WeatherUI } from './weatherUI';
 
-import { GetGeolocation } from './getGeolocation';
+import { Geolocater } from './getGeolocation';
 
 import { GetWeatherByLocation } from './weatherDataByGeolocation';
 
 import { GetWeatherByCityName } from './weatherDataByCityName'; 
 
 
-
-
 //Make instance of weatherUI
 const newUI = new WeatherUI();
 
-const geolocation = new GetGeolocation();
 
-
-const  getByLoc = () => {
-    
-    // console.log(geolocation);
-    const p = geolocation.getGeolocation();
+//Getting data from Api server by location
+const  getWeatherByLocation = () => {
    
-    
-     //Make instance of GetWeatherByLocation
-    const weatherDataByLocation = new GetWeatherByLocation(geolocation.lat, geolocation.long);
+    //Make instance of GetWeatherByLocation
+   const geolocator = new Geolocater();
 
-    //Getting data from Api server by geolocation
-    weatherDataByLocation.get().then(results => {
-        newUI.display(results);
-    })
-    .catch(err => console.log(err));
+   //Call watchPosition methods,
+   //recieve coordinates and pass them
+   //to new created instance of GetWeatherByLocation Class
+   geolocator.watchPosition().then( ( coordinates ) => {
+
+   const weatherDataByLocation = new  GetWeatherByLocation(coordinates.latitude, coordinates.longitude);
+
+   //Getting data from Api server by geolocation and display on UI
+   weatherDataByLocation.get()
+                        .then(results => { newUI.display(results)})
+                        .catch(err => console.log(err));
+   });
 }
-
-
 
 
 //Getting data from Api server by city name
 const getWeatherByCity = () => {
-    let weatherByCityName, cityName;
+   let cityName;
 
-    cityName = document.querySelector('#city').value;
+   //Get input value from user
+   cityName = document.querySelector('#city').value;
 
-    weatherByCityName = new GetWeatherByCityName(cityName);
+   //Make new instance and pass value
+   const weatherByCityName = new GetWeatherByCityName(cityName);
 
-    weatherByCityName.get().then(results => {
-        console.log(results);
-        newUI.display(results);
-    }) 
-    .catch(err => console.log(err));
+   //Recieve data and display it on UI
+   weatherByCityName.get().then(results => {
+       console.log(results);
+       newUI.display(results);
+   }) 
+   .catch(err => console.log(err));
 }
 
-document.getElementById('geolocation').addEventListener('click', getByLoc);
+
+//On click Event listeners
+document.getElementById('geolocation').addEventListener('click', getWeatherByLocation);
 
 document.getElementById('search').addEventListener('click', getWeatherByCity);
-
-
-
-
-
-
-
 
 
 
