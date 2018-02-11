@@ -4,7 +4,7 @@
 import { WeatherUI } from './weatherUI';
 
 //Make instance of weatherUI
-const newUI = new WeatherUI();
+const newWeatherUI = new WeatherUI();
 
 export class Geolocater {
 
@@ -32,6 +32,7 @@ export class Geolocater {
 
       //3.Getting coordinats from navigator 
       watchPosition() {
+        // this.navigator.geolocation.clearWatch(this.navigator);
         let options  = {timeout:60000};
 
         //Return promise 
