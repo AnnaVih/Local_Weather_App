@@ -22,7 +22,7 @@ function getWeatherByLocation() {
    //Call watchPosition methods,
    //recieve coordinates and pass them
    //to new created instance of GetWeatherByLocation Class
-   geolocator.watchPosition().then(function( coordinates ) {
+   geolocator.getCurrentPosition().then(function( coordinates ) {
 
    const weatherDataByLocation = new  GetWeatherByLocation(coordinates.latitude, coordinates.longitude);
 

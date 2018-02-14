@@ -31,23 +31,29 @@ export class Geolocater {
       }
 
       //3.Getting coordinats from navigator 
-      watchPosition() {
-        // this.navigator.geolocation.clearWatch(this.navigator);
-        let options  = {timeout:60000};
-
+      getCurrentPosition() {
         //Return promise 
-        return new Promise( ( resolve, reject, options ) => {
+        return new Promise( ( resolve, reject) => {
+          function positionSuccess(position) {
+            resolve(position.coords);
+          }
+          function error() {
+            reject( alert('Sorry, you did not allow to share your geolocation, try to use search BY city name'));
+          }
 
-          this.navigator.geolocation.watchPosition( ( position ) => {
-            
-            //Getting latitude and longitude and resolve them
-            let latitude  = position.coords.latitude;
-            let longitude = position.coords.longitude;
-            
-            
-            resolve( { latitude, longitude } );
-          //If user does not allow to share geolocation notify them
-          }, () => { reject( alert('Sorry, you did not allow to share your geolocation, try to use search BY city name')); } );
+          this.navigator.geolocation.getCurrentPosition(positionSuccess, error, { enableHighAccuracy: true });
         });
+        
+          // this.navigator.geolocation.getCurrentPosition( ( position ) => {
+            
+          //   //Getting latitude and longitude and resolve them
+          //   let latitude  = position.coords.latitude;
+          //   let longitude = position.coords.longitude;
+            
+            
+          //   resolve( { latitude, longitude } );
+          // //If user does not allow to share geolocation notify them
+          // }, () => { reject( alert('Sorry, you did not allow to share your geolocation, try to use search BY city name')); } );
+       
       }
 }
