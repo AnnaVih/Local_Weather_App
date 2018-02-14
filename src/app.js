@@ -15,30 +15,34 @@ const newWeatherUI = new WeatherUI();
 
 
 //Getting data from Api server by location
-const  getWeatherByLocation = () => {
-   
+function getWeatherByLocation() {
     //Make instance of GetWeatherByLocation
    const geolocator = new Geolocater();
-
+   
    //Call watchPosition methods,
    //recieve coordinates and pass them
    //to new created instance of GetWeatherByLocation Class
-   geolocator.watchPosition().then( ( coordinates ) => {
+   geolocator.watchPosition().then(function( coordinates ) {
 
    const weatherDataByLocation = new  GetWeatherByLocation(coordinates.latitude, coordinates.longitude);
 
    //Getting data from Api server by geolocation and display on UI
    weatherDataByLocation.get()
-                        .then(results => {console.log(results);newWeatherUI.display(results)})
-                        .catch(err => console.log(err));
-   });
+                        .then(function(results){
+                            // console.log(results);
+                            newWeatherUI.display(results)})
+
+                        .catch(function(err){
+                            console.log(err);
+                        });
+});
 }
 
 
 
 //Getting data from Api server by city name
-const getWeatherByCity = () => {
-   let cityName, selectors;
+function getWeatherByCity() {
+   let selectors, cityName;
 
    selectors = newWeatherUI.selectors;
 
@@ -49,11 +53,14 @@ const getWeatherByCity = () => {
    const weatherByCityName = new GetWeatherByCityName(cityName);
 
    //Recieve data and display it on UI
-   weatherByCityName.get().then(results => {
-       console.log(results);
-       newWeatherUI.display(results);
-   }) 
-   .catch(err => console.log(err));
+   weatherByCityName.get()
+                    .then(function(results){
+                    // console.log(results);
+                    newWeatherUI.display(results);
+                    }) 
+                    .catch(function(err){
+                        console.log(err);
+                    });
 }
 
 
