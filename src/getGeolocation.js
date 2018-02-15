@@ -43,17 +43,6 @@ export class Geolocater {
 
           this.navigator.geolocation.getCurrentPosition(positionSuccess, error, { enableHighAccuracy: true });
         });
-        
-          // this.navigator.geolocation.getCurrentPosition( ( position ) => {
-            
-          //   //Getting latitude and longitude and resolve them
-          //   let latitude  = position.coords.latitude;
-          //   let longitude = position.coords.longitude;
-            
-            
-          //   resolve( { latitude, longitude } );
-          // //If user does not allow to share geolocation notify them
-          // }, () => { reject( alert('Sorry, you did not allow to share your geolocation, try to use search BY city name')); } );
-       
+
       }
 }

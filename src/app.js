@@ -10,16 +10,25 @@ import { GetWeatherByLocation } from './weatherDataByGeolocation';
 import { GetWeatherByCityName } from './weatherDataByCityName'; 
 
 
-//Make instance of weatherUI
+//Make instance of weatherUI class
 const newWeatherUI = new WeatherUI();
 
+//Getting document selectors
+const documentSelectors = newWeatherUI.selectors;
 
-//Getting data from Api server by location
+
+
+/***************  GETTING WEATHER DATA ************************
+ *************************************************************/
+
+/********** Getting data from Api server by CURRENT LOCATION *********/
+
 function getWeatherByLocation() {
-    //Make instance of GetWeatherByLocation
+
+   //Make instance of GetWeatherByLocation
    const geolocator = new Geolocater();
    
-   //Call watchPosition methods,
+   //Call getCurrentPosition methods,
    //recieve coordinates and pass them
    //to new created instance of GetWeatherByLocation Class
    geolocator.getCurrentPosition().then(function( coordinates ) {
@@ -35,21 +44,20 @@ function getWeatherByLocation() {
                         .catch(function(err){
                             console.log(err);
                         });
-});
+    });
 }
 
 
 
-//Getting data from Api server by city name
+
+/************** Getting data from Api server by CITY NAME **********/
+
 function getWeatherByCity() {
-   let selectors, cityName;
 
-   selectors = newWeatherUI.selectors;
+   //Get city name from user
+   const cityName = documentSelectors.cityInput.value;
 
-   //Get input value from user
-   cityName = selectors.cityInput.value;
-
-   //Make new instance and pass value
+   //Make new instance and pass values
    const weatherByCityName = new GetWeatherByCityName(cityName);
 
    //Recieve data and display it on UI
@@ -60,11 +68,26 @@ function getWeatherByCity() {
                     }) 
                     .catch(function(err){
                         console.log(err);
-                    });
+                    });                  
 }
 
 
+
+/******** Switch temperature Between Celcius and Fahrenheit and vice versa ***/
+
+function switchBetweenUnits() {
+    this.value === 'fahrenheit' ? newWeatherUI.fromCelsiusToFahrenheit() : newWeatherUI.fromFahrenheitToCelsius();
+}
+
+
+
+/******************  EVENT LISTENERS  ***********************
+ ***********************************************************/
+
+
+
 //On click Event listeners
+
 document.getElementById('geolocation').addEventListener('click', getWeatherByLocation);
 
 document.getElementById('search').addEventListener('click', getWeatherByCity);
@@ -75,6 +98,7 @@ document.addEventListener('keypress',  function(event) {
     }
 });
 
+document.querySelectorAll('.units').forEach(unit => unit.addEventListener('click', switchBetweenUnits));
 
 
 

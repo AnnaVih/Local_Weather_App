@@ -1,3 +1,5 @@
+'use strict';
+
 //Class for getting data by City name
 class GetWeatherByCityName {
     constructor(city) {
