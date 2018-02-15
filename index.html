@@ -7,6 +7,7 @@
   <title>Local Weater</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
@@ -24,11 +25,12 @@
         <br>
         <p id="error"></p>
         <p id="cityName"></p>
-       <p>In: <input type="radio" name="temp" id="celcius" checked> Celcius
-        <input type="radio" name="temp" id="fahrenheit">Fahrenheit
-      </p>
-
         <p id="temperature"></p>
+        <div id="units">
+          <p>In: <input type="radio" name="temp" value="celcius" class="units" id="celcius"> Celcius
+          <input type="radio" name="temp" value="fahrenheit" class="units">Fahrenheit
+          </p>
+        </div>
        </div>
     </div>
   </div>
