@@ -76,7 +76,18 @@ function getWeatherByCity() {
 /******** Switch temperature Between Celcius and Fahrenheit and vice versa ***/
 
 function switchBetweenUnits() {
-    this.value === 'fahrenheit' ? newWeatherUI.fromCelsiusToFahrenheit() : newWeatherUI.fromFahrenheitToCelsius();
+   //Check if this units not active
+   if( !(this.classList.contains('active')) && this.id === 'fahrenheit' ){
+      //Call 
+      newWeatherUI.fromCelsiusToFahrenheit();
+
+   }else if( !(this.classList.contains('active')) && this.id === 'celcius' ){
+
+    newWeatherUI.fromFahrenheitToCelsius();
+
+   }else {
+       return;
+   }
 }
 
 

@@ -7,7 +7,8 @@ export class WeatherUI {
             cityInput: document.querySelector('#city'),
             temperature: document.querySelector('#temperature'),
             units: document.querySelector('#units'),
-            radioButton: document.querySelector('#celcius')
+            celcius: document.querySelector('#celcius'),
+            fahrenheit: document.querySelector('#fahrenheit')
         }
         this.temp = '';
     }
@@ -21,46 +22,63 @@ export class WeatherUI {
 
     //Display weather 
     display(weather){
+        this.selectors.celcius.classList.add('active');
+        
+        this.toggleClassess(this.selectors.fahrenheit, this.selectors.celcius);
+       
+       
         //Save temperature state in Celcius
         this.temp = Math.round(weather.main.temp);
 
         //Clear input field 
         this.selectors.cityInput.value = '';
 
-        this.selectors.radioButton.checked = true;
-
         //Display data on UI
         this.selectors.cityName.textContent = weather.name;
-        this.selectors.temperature.textContent = Math.round(weather.main.temp) + " \xB0C";  
+        this.selectors.temperature.textContent = Math.round(weather.main.temp);  
 
         //Display temperature units options
         this.selectors.units.style.display = 'block';
 
     }
 
-    // Switch from Celcius to Fahrenheit
+   
     fromCelsiusToFahrenheit(){
+        
+        //Remove active class from fahrenheit and add to celcius
+        this.toggleClassess(this.selectors.celcius, this.selectors.fahrenheit);
+
         //Basic algorithm to convert from Celcius to Fahrenheit
         const cToFahr = Math.round(this.temp * 9 / 5 + 32);
 
         //Display temperature in Fahrenheit
-        const message = `${cToFahr} \xB0F.`;
-        this.selectors.temperature.textContent = message;
+        this.selectors.temperature.textContent = cToFahr;
 
         //Change state of temperature
         this.temp = cToFahr;
     }
 
-    // Switch from Fahrenheit to Celcius
+
+    
     fromFahrenheitToCelsius(){
-         //Basic algorithm to convert from Fahrenheit to Celcius
+        //Remove active class from celcius and add to fahrenheit
+        this.toggleClassess(this.selectors.fahrenheit, this.selectors.celcius);
+
+        //Basic algorithm to convert from Fahrenheit to Celcius
         const fToCel = Math.round((this.temp - 32) * 5 / 9);
 
         //Display temperature in Celcius
-        const message = `${fToCel} \xB0C.`;
-        this.selectors.temperature.textContent = message;
+        this.selectors.temperature.textContent = fToCel;
 
         //Reset state of temperature
         this.temp = fToCel;
       }  
+
+    //Toggle active class 
+    toggleClassess(firstClassName, secondClassName){
+        if(firstClassName.classList.contains('active')){
+           firstClassName.classList.remove('active');
+           secondClassName.classList.add('active');
+        }
+    }
 }
