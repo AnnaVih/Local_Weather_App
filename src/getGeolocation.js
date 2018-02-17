@@ -21,7 +21,7 @@ export class Geolocater {
       }
 
       //1.Checking for support 
-      isGeolocationAvailable() {
+      isGeolocationAvailable () {
         return 'geolocation' in navigator ? true : false;
       }
 

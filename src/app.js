@@ -37,11 +37,11 @@ function getWeatherByLocation() {
 
    //Getting data from Api server by geolocation and display on UI
    weatherDataByLocation.get()
-                        .then(function(results){
+                        .then(function extractData(results){
                             // console.log(results);
                             newWeatherUI.display(results)})
 
-                        .catch(function(err){
+                        .catch(function extractData(err){
                             console.log(err);
                         });
     });
@@ -62,11 +62,12 @@ function getWeatherByCity() {
 
    //Recieve data and display it on UI
    weatherByCityName.get()
-                    .then(function(results){
+                    .then(function extractData(results){
                     // console.log(results);
                     newWeatherUI.display(results);
+                    console.log(results);
                     }) 
-                    .catch(function(err){
+                    .catch(function extractData(err){
                         console.log(err);
                     });                  
 }

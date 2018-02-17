@@ -1,6 +1,25 @@
-#units {
-    display: none;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 16px;
 }
+
+body {
+    background-image: url('images/day.jpg');
+    background-size: 100% 100vh;
+}
+
+.weather-screen {
+    min-height: 50vh;
+    margin-top: 15vh;
+    background-color: rgba(255, 255, 255, 0.2);
+    position:relative;
+    -webkit-box-shadow: 0 3px 19px -1px;
+       -moz-box-shadow: 0 3px 19px -1px;
+            box-shadow: 0 3px 19px -1px;
+}
+
 
 .units {
     cursor: pointer;
@@ -11,4 +30,8 @@
     color: black;
     font-size: 20px;
     font-weight: 500;
+}
+
+#units {
+    display: none;
 }

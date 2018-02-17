@@ -26,7 +26,6 @@ export class WeatherUI {
         
         this.toggleClassess(this.selectors.fahrenheit, this.selectors.celcius);
        
-       
         //Save temperature state in Celcius
         this.temp = Math.round(weather.main.temp);
 
