@@ -63,9 +63,8 @@ function getWeatherByCity() {
    //Recieve data and display it on UI
    weatherByCityName.get()
                     .then(function extractData(results){
-                    // console.log(results);
-                    newWeatherUI.display(results);
                     console.log(results);
+                    newWeatherUI.display(results);
                     }) 
                     .catch(function extractData(err){
                         console.log(err);

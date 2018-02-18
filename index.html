@@ -10,31 +10,58 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Container -->
   <div class="container">
-    <article class="weather-screen">
+    <head>
+        <div class="row">
+            <div class="col-sm-12 text-center mt-5">
+              <h1 id="weather-app">FreeCodeCamp<br> Weather App</h1>
+            </div>
+        </div>
+    </head>
+    <main class="weather-screen p-5">
       <div class="row">
         <div class="col-sm-12 text-center">
-            <h1 class="mt-3">Local Weather App</h1>
-            <br>
             GET weather BY :<br>
             <button id="geolocation"> Current locattion <i class="fas fa-map-marker-alt fa-sm"></i> </button> OR
             <input type="text" id="city" class="mt-3" placeholder="Enter the city">
             <button id="search">Search</button><br>
         </div>
-        <div class="col-sm-10 offset-sm-1 text-center">
-          <br>
-          <p id="error"></p>
-          <p id="cityName"></p>
-          
-          <div id="units">
-              <p id="temperatureUnits"><span id="temperature"></span> <span id="celcius" class="units">&#8451;</span> | <span id="fahrenheit" class="units"> &#8457;</span></p>
-          
-            </p>
-          </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-sm-12">
+          <p>
+            <h3>Maidstone, GB </h3>
+                sunday, 12:00.
+          </p>
+        </div>
+        <div class="col-sm-5">
+            <img src="http://openweathermap.org/img/w/02d.png" class="weather-icon">
+              <span id="units">
+                  <p id="temperatureUnits">
+                    <span id="temperature">12</span> 
+                    <span id="celcius" class="units">&#8451;</span> | <span id="fahrenheit" class="units"> &#8457;</span>
+                  </p> 
+              </span>
+              <h5 class="clouds">Few clouds</h5>
+            
+            
+        </div>  
+        <div class="col-sm-4">
+            <p><span class="weather-forecast">Main:   </span> Clouds</p>
+            <p><span class="weather-forecast">Pressure:</span>1017.58 hPa</p>
+            <p><span class="weather-forecast">Humidity:</span> 96%</p>
+        </div>
+        <div class="col-sm-3">
+          <p><span class="weather-forecast">Sunrise:</span> 07:12</p>
+          <p><span class="weather-forecast">Sunset:</span>  19:12</p>
+          <p><span class="weather-forecast">Wind:</span>4.1 mph</p>
         </div>
       </div>
-  </article>
+    </main>
   </div>
+  <!-- End container -->
   
   
   
