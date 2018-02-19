@@ -2,82 +2,168 @@
 
 export class WeatherUI {
     constructor() {
-        this.selectors = {
-            cityName: document.querySelector('#cityName'),
-            cityInput: document.querySelector('#search-city'),
-            temperature: document.querySelector('#temperature'),
-            units: document.querySelector('#units'),
-            celcius: document.querySelector('#celcius'),
-            fahrenheit: document.querySelector('#fahrenheit')
-        }
-        this.temp = '';
+                this.body       = document.querySelector('body');
+                this.dinamicDiv = document.querySelector('#dinamic-content');
+                this.cityInput  = document.querySelector('#search-city');
+                this.temp;  
+                this.cityName;
+                this.temperature;
+                this.unitsType;
+                this.celcius;
+                this.fahrenheit;        
     }
 
 
     /**************** METHODS **********************/
 
-    ifNotSupportedByBrowser() {
+    ifGeolocationNotSupportedByBrowser() {
         // Notify user
+
     }
 
-    //Display weather 
-    display(weather){
-        this.selectors.celcius.classList.add('active');
-        
-        this.toggleClassess(this.selectors.fahrenheit, this.selectors.celcius);
-       
-        //Save temperature state in Celcius
+    ifUserDoNotAllowShareGeolocation() {
+
+    }
+
+
+    //Display weather on ui
+    display(weather) {
+        //1.Get document element once and use its constant(Do't get it every time)
+        const documentEl = document;
+        let dinamicContent;
+
+        //2.Save temperature state in Celcius
         this.temp = Math.round(weather.main.temp);
 
-        //Clear input field 
-        this.selectors.cityInput.value = '';
+        //3.Getting sun set and sun rise times
+        const sunSetSunRise = this.sunSetAndSunriseTime(weather.sys.sunrise,weather.sys.sunset);
 
-        //Display data on UI
-        this.selectors.cityName.textContent = weather.name;
-        this.selectors.temperature.textContent = Math.round(weather.main.temp);  
+        //4.Make html snippet with dinamic content recived from Api
+        dinamicContent = `
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <h3>${weather.name}, ${weather.sys.country}</h3>
+                    <p>${this.getDayAndTime().day}, ${this.getDayAndTime().hour}.</p>
+                </div>
+                <div class="col-md-5">
+                    <img src="http://openweathermap.org/img/w/${weather.weather[0].icon}.png" class="weather-icon">
+                    <div id="units">
+                            <span id="temperature">${this.temp}</span> 
+                            <span id="celcius" class="active units-type">&#8451;</span> | <span id="fahrenheit" class="units-type"> &#8457;</span>
+                            <p class="weather-description">${weather.weather[0].description}</p>
+                    </div>
+                </div>  
+                <div class="col-md-4">
+                    <p><span class="weather-forecast">Main:   </span>${weather.weather[0].main}</p>
+                    <p><span class="weather-forecast">Pressure:</span> ${weather.main.pressure} hPa</p>
+                    <p><span class="weather-forecast">Humidity:</span> ${weather.main.humidity}%</p>
+                </div>
+                <div class="col-md-3">
+                    <p><span class="weather-forecast">Wind:</span> ${weather.wind.speed}mph</p>
+                    <p><span class="weather-forecast">Sunrise:</span> ${sunSetSunRise.sunR}</p>
+                    <p><span class="weather-forecast">Sunset:</span> ${sunSetSunRise.sunS}</p>
+                </div>
+            </div>`;
 
-        //Display temperature units options
-        this.selectors.units.style.display = 'block';
+      
+        //5.Pass dinamic snippet into created div
+        this.dinamicDiv.innerHTML = dinamicContent;
+
+        //6.Get selectors and attach them to this constructor class for future usage
+        this.cityName    = documentEl.querySelector('#cityName');
+        this.temperature = documentEl.querySelector('#temperature');
+        this.unitsType   = documentEl.querySelectorAll('.units-type');
+        this.celcius     = documentEl.querySelector('#celcius');
+        this.fahrenheit  = documentEl.querySelector('#fahrenheit');
+
+        //7.Clear input field 
+        this.cityInput.value = '';
 
     }
 
    
     fromCelsiusToFahrenheit(){
         
-        //Remove active class from fahrenheit and add to celcius
-        this.toggleClassess(this.selectors.celcius, this.selectors.fahrenheit);
+        //1.Remove active class from fahrenheit and add to celcius
+        this.toggleClassess(this.celcius, this.fahrenheit);
 
-        //Basic algorithm to convert from Celcius to Fahrenheit
+        //2.Basic algorithm to convert from Celcius to Fahrenheit
         const cToFahr = Math.round(this.temp * 9 / 5 + 32);
 
-        //Display temperature in Fahrenheit
-        this.selectors.temperature.textContent = cToFahr;
+        //3.Display temperature in Fahrenheit
+        this.temperature.textContent = cToFahr;
 
-        //Change state of temperature
+        //4.Change state of temperature
         this.temp = cToFahr;
     }
 
 
     
     fromFahrenheitToCelsius(){
-        //Remove active class from celcius and add to fahrenheit
-        this.toggleClassess(this.selectors.fahrenheit, this.selectors.celcius);
+        //1.Remove active class from celcius and add to fahrenheit
+        this.toggleClassess(this.fahrenheit, this.celcius);
 
-        //Basic algorithm to convert from Fahrenheit to Celcius
+        //2.Basic algorithm to convert from Fahrenheit to Celcius
         const fToCel = Math.round((this.temp - 32) * 5 / 9);
 
-        //Display temperature in Celcius
-        this.selectors.temperature.textContent = fToCel;
+        //3.Display temperature in Celcius
+        this.temperature.textContent = fToCel;
 
-        //Reset state of temperature
+        //4.Reset state of temperature
         this.temp = fToCel;
-      }  
+    }  
 
-    //Toggle active class 
+    
     toggleClassess(firstClassName, secondClassName){
+        //Check for active class and toogle on click
         if(firstClassName.classList.contains('active')){
            firstClassName.classList.remove('active');
            secondClassName.classList.add('active');
         }
+    }
+
+
+    getDayAndTime() {
+        //Get dste and display day of week
+        const date = new Date();
+        const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", 
+        "Thursday", "Friday", "Saturday"];
+
+        //Return current day and hours
+        return {
+            day: dayNames[date.getDay()],
+            hour: `${date.getHours()}:00` 
+        }
+    }
+
+
+    sunSetAndSunriseTime(sunRise, sunSet) {
+        const date1 = new Date(sunRise * 1000);
+        const date2 = new Date(sunSet * 1000);
+
+        //Check for hour and minute in case if less than 10 add 0 before
+        const  sunRiseHour =  date1.getHours() < 10 ? '0' + date1.getHours() : date1.getHours();
+        const  sunRiseMin  =  date1.getMinutes() < 10 ? '0' + date1.getMinutes() : date1.getMinutes();
+        const  sunSetHour  =  date2.getHours() < 10 ? '0' + date2.getHours() : date2.getHours();
+        const  sunSetMin   =  date2.getMinutes() < 10 ? '0' + date2.getMinutes() : date2.getMinutes();
+
+        //Concat hours and minutes
+        const sunR = `${sunRiseHour}:${sunRiseMin}`;
+        const sunS = `${sunSetHour}:${sunSetMin}`;
+
+        //Return sun rise and sun set times
+        return {
+            sunR,
+            sunS
+        }
+    }
+
+
+    addBackgroundImage() {
+        const date = new Date();
+        //Check for current hours if it between 6am and 18pm set day background image, otherwise set night.
+        date.getHours() > 6 && date.getHours() < 18 
+                                                ? this.body.style.backgroundImage = 'url("images/day.jpg")'
+                                                : this.body.style.backgroundImage = 'url("images/night.jpg")';  
     }
 }

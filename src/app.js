@@ -13,9 +13,6 @@ import { GetWeatherByCityName } from './weatherDataByCityName';
 //Make instance of weatherUI class
 const newWeatherUI = new WeatherUI();
 
-//Getting document selectors
-const documentSelectors = newWeatherUI.selectors;
-
 
 
 /***************  GETTING WEATHER DATA ************************
@@ -25,28 +22,30 @@ const documentSelectors = newWeatherUI.selectors;
 
 function getWeatherByLocation() {
 
-   //Make instance of GetWeatherByLocation
-   const geolocator = new Geolocater();
+    //1. Make instance of GetWeatherByLocation
+    const geolocator = new Geolocater();
    
-   //Call getCurrentPosition methods,
-   //recieve coordinates and pass them
-   //to new created instance of GetWeatherByLocation Class
-   geolocator.getCurrentPosition().then(function( coordinates ) {
+    //2. Call getCurrentPosition methods, recieve coordinates
+    geolocator.getCurrentPosition().then(function( coordinates ) {
 
-   const weatherDataByLocation = new  GetWeatherByLocation(coordinates.latitude, coordinates.longitude);
+        //3. Pass coordinates to new created instance of GetWeatherByLocation Class
+        const weatherDataByLocation = new  GetWeatherByLocation(coordinates.latitude, coordinates.longitude);
 
-   //Getting data from Api server by geolocation and display on UI
-   weatherDataByLocation.get()
-                        .then(function extractData(results){
-                            // console.log(results);
-                            newWeatherUI.display(results)})
+        //4. Getting data from Api server by geolocation and display on UI
+        weatherDataByLocation.get()
+                            .then(function extractData(results){
+                                // console.log(results);
+                                newWeatherUI.display(results);
 
-                        .catch(function extractData(err){
-                            console.log(err);
-                        });
+                                //Toggle active class on click of units type
+                                newWeatherUI.unitsType.forEach(unit => unit.addEventListener('click', switchBetweenUnits));
+                            })
+
+                            .catch(function extractData(err){
+                                console.log(err);
+                            });
     });
 }
-
 
 
 
@@ -54,48 +53,60 @@ function getWeatherByLocation() {
 
 function getWeatherByCity() {
 
-   //Get city name from user
-   const cityName = documentSelectors.cityInput.value;
+    //1.Get city name from user
+    const cityName = newWeatherUI.cityInput.value;
 
-   //Make new instance and pass values
-   const weatherByCityName = new GetWeatherByCityName(cityName);
+    //2.If city name value is true continue
+    if(cityName){
 
-   //Recieve data and display it on UI
-   weatherByCityName.get()
+    //3.Make new instance and pass values
+    const weatherByCityName = new GetWeatherByCityName(cityName);
+
+    //4.Recieve data and display it on UI
+    weatherByCityName.get()
                     .then(function extractData(results){
-                    console.log(results);
+                    // console.log(results);
                     newWeatherUI.display(results);
+                    
+                    //Toggle active class on click of units type
+                    newWeatherUI.unitsType.forEach(unit => unit.addEventListener('click', switchBetweenUnits));
                     }) 
                     .catch(function extractData(err){
                         console.log(err);
-                    });                  
+                    });  
+    }        
 }
 
 
 
-/******** Switch temperature Between Celcius and Fahrenheit and vice versa ***/
-
+// Switch temperature Between Celcius and Fahrenheit and vice versa
 function switchBetweenUnits() {
-   //Check if this units not active
-   if( !(this.classList.contains('active')) && this.id === 'fahrenheit' ){
-      //Call 
-      newWeatherUI.fromCelsiusToFahrenheit();
+    //Check if this units not active
+    if( !(this.classList.contains('active')) && this.id === 'fahrenheit' ){
+    
+        newWeatherUI.fromCelsiusToFahrenheit();
 
-   }else if( !(this.classList.contains('active')) && this.id === 'celcius' ){
+    }else if( !(this.classList.contains('active')) && this.id === 'celcius' ){
 
-    newWeatherUI.fromFahrenheitToCelsius();
+        newWeatherUI.fromFahrenheitToCelsius();
 
-   }else {
-       return;
-   }
+    }else {
+
+        return;
+    }
+}
+
+
+//Set background image and depend on time of day change it
+function setBackgroundImage() {
+    
+    newWeatherUI.addBackgroundImage();
 }
 
 
 
 /******************  EVENT LISTENERS  ***********************
  ***********************************************************/
-
-
 
 //On click Event listeners
 
@@ -109,7 +120,12 @@ document.addEventListener('keypress',  function(event) {
     }
 });
 
-document.querySelectorAll('.units-type').forEach(unit => unit.addEventListener('click', switchBetweenUnits));
+document.addEventListener('DOMContentLoaded', setBackgroundImage);
+
+
+
+
+
 
 
 

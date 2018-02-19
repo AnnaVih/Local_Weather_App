@@ -11,7 +11,6 @@
 }
 
 body {
-    background-image: url('images/day.jpg');
     background-size: 100% 100vh;
 }
 
@@ -107,9 +106,10 @@ p {
     background-color: rgba(255, 255, 255, .6);
     box-shadow: 0 3px 19px -1px;
     margin: 7vh auto 0;
-    min-height: 45vh;
+    min-height: 30vh;
     position:relative;
     width: 70%;
+    max-width: 800px;
 }
 
 .freeCodeCamp-app, #temperature, .find-weather-by {
