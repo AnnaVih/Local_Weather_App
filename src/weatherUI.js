@@ -4,7 +4,7 @@ export class WeatherUI {
     constructor() {
         this.selectors = {
             cityName: document.querySelector('#cityName'),
-            cityInput: document.querySelector('#city'),
+            cityInput: document.querySelector('#search-city'),
             temperature: document.querySelector('#temperature'),
             units: document.querySelector('#units'),
             celcius: document.querySelector('#celcius'),

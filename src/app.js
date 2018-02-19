@@ -99,9 +99,9 @@ function switchBetweenUnits() {
 
 //On click Event listeners
 
-document.getElementById('geolocation').addEventListener('click', getWeatherByLocation);
+document.getElementById('my-geolocation-btn').addEventListener('click', getWeatherByLocation);
 
-document.getElementById('search').addEventListener('click', getWeatherByCity);
+document.getElementById('search-btn').addEventListener('click', getWeatherByCity);
 
 document.addEventListener('keypress',  function(event) {
     if(event.keyCode === 13 || event.which === 13) {
@@ -109,7 +109,7 @@ document.addEventListener('keypress',  function(event) {
     }
 });
 
-document.querySelectorAll('.units').forEach(unit => unit.addEventListener('click', switchBetweenUnits));
+document.querySelectorAll('.units-type').forEach(unit => unit.addEventListener('click', switchBetweenUnits));
 
 
 
