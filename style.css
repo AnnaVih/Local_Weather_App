@@ -105,7 +105,7 @@ p {
     -webkit-box-shadow: 0 3px 19px -1px;
     background-color: rgba(255, 255, 255, .6);
     box-shadow: 0 3px 19px -1px;
-    margin: 7vh auto 0;
+    margin: 5vh auto ;
     min-height: 30vh;
     position:relative;
     width: 70%;
@@ -148,4 +148,12 @@ p {
     color: black;
     font-size: 25px;
     font-weight: 500;
+}
+
+.alert-message {
+    background:  rgba(255, 114, 114, 0.705);
+    border: 0;
+    box-shadow: 0 6px 10px 0 rgba(221, 54, 54, 0.1);
+    color: rgb(66, 5, 5);
+    padding: 12px 17px;
 }

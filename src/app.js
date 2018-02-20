@@ -42,6 +42,7 @@ function getWeatherByLocation() {
                             })
 
                             .catch(function extractData(err){
+                                newWeatherUI.alertMessage('Please, check your internet connection or reload page', 'alert-message');
                                 console.log(err);
                             });
     });
@@ -72,6 +73,8 @@ function getWeatherByCity() {
                     newWeatherUI.unitsType.forEach(unit => unit.addEventListener('click', switchBetweenUnits));
                     }) 
                     .catch(function extractData(err){
+                        newWeatherUI.alertMessage('Please, type correct city', 'alert-message');
+                
                         console.log(err);
                     });  
     }        

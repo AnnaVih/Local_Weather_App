@@ -20,17 +20,20 @@ export class Geolocater {
 
       }
 
-      //1.Checking for support 
+      //Check for geolocation
       geolocationIsAvailable () {
         return 'geolocation' in navigator ? true : false;
       }
 
-      //2.Notice user if browser does not support geolocation
+
+
+      //Alert user if browser does not support geolocation
       geolocationIsNotAvailable() {
-         alert('Sorry, your browser does not support Geolocation');
+        newWeatherUI.alertMessage('Sorry, your browser does not support Geolocation', 'alert-message');
       }
 
-      //3.Getting coordinats from navigator 
+
+      //Getting coordinats from navigator 
       getCurrentPosition() {
         //Return promise 
         return new Promise( ( resolve, reject ) => {
@@ -38,7 +41,7 @@ export class Geolocater {
             resolve( position.coords );
           }
           function error() {
-            reject( alert('Sorry, you did not allow to share your geolocation, try to use search BY city name'));
+            reject( newWeatherUI.alertMessage('Sorry, you did not allow to share your geolocation. Try to search by city', 'alert-message'));
           }
 
           this.navigator.geolocation.getCurrentPosition(positionSuccess, error, { enableHighAccuracy: true });

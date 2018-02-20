@@ -16,17 +16,41 @@ export class WeatherUI {
 
     /**************** METHODS **********************/
 
-    ifGeolocationNotSupportedByBrowser() {
-        // Notify user
+    alertMessage(msg, className) {
+        //Clear alert in case if any
+        this.clearAlert();
 
+        //Create div
+        const div = document.createElement('div');
+
+        //Add class
+        div.className = className;
+
+        //Create text node
+        const textNode = document.createTextNode(msg);
+
+        //Apend to parent div
+        div.appendChild(textNode);
+
+        const alert = document.querySelector('#alert');
+
+        alert.appendChild(div);
+
+        //3.Remove it after 4 sec
+        setTimeout(() => {
+            this.clearAlert();
+        }, 4000);
     }
 
-    ifUserDoNotAllowShareGeolocation() {
 
+    clearAlert(){
+        const currentAlert = document.querySelector('.alert-message');
+        if(currentAlert){
+            currentAlert.remove();
+        }
     }
 
 
-    //Display weather on ui
     display(weather) {
         //1.Get document element once and use its constant(Do't get it every time)
         const documentEl = document;
@@ -65,7 +89,6 @@ export class WeatherUI {
                 </div>
             </div>`;
 
-      
         //5.Pass dinamic snippet into created div
         this.dinamicDiv.innerHTML = dinamicContent;
 
@@ -78,12 +101,10 @@ export class WeatherUI {
 
         //7.Clear input field 
         this.cityInput.value = '';
-
     }
 
-   
+
     fromCelsiusToFahrenheit(){
-        
         //1.Remove active class from fahrenheit and add to celcius
         this.toggleClassess(this.celcius, this.fahrenheit);
 
@@ -98,7 +119,6 @@ export class WeatherUI {
     }
 
 
-    
     fromFahrenheitToCelsius(){
         //1.Remove active class from celcius and add to fahrenheit
         this.toggleClassess(this.fahrenheit, this.celcius);
@@ -113,7 +133,7 @@ export class WeatherUI {
         this.temp = fToCel;
     }  
 
-    
+
     toggleClassess(firstClassName, secondClassName){
         //Check for active class and toogle on click
         if(firstClassName.classList.contains('active')){
@@ -126,35 +146,42 @@ export class WeatherUI {
     getDayAndTime() {
         //Get dste and display day of week
         const date = new Date();
+        const hours =  date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
         const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", 
         "Thursday", "Friday", "Saturday"];
 
         //Return current day and hours
         return {
             day: dayNames[date.getDay()],
-            hour: `${date.getHours()}:00` 
+            hour: `${hours}:00` 
         }
     }
 
 
     sunSetAndSunriseTime(sunRise, sunSet) {
-        const date1 = new Date(sunRise * 1000);
-        const date2 = new Date(sunSet * 1000);
-
-        //Check for hour and minute in case if less than 10 add 0 before
-        const  sunRiseHour =  date1.getHours() < 10 ? '0' + date1.getHours() : date1.getHours();
-        const  sunRiseMin  =  date1.getMinutes() < 10 ? '0' + date1.getMinutes() : date1.getMinutes();
-        const  sunSetHour  =  date2.getHours() < 10 ? '0' + date2.getHours() : date2.getHours();
-        const  sunSetMin   =  date2.getMinutes() < 10 ? '0' + date2.getMinutes() : date2.getMinutes();
-
-        //Concat hours and minutes
-        const sunR = `${sunRiseHour}:${sunRiseMin}`;
-        const sunS = `${sunSetHour}:${sunSetMin}`;
+        //Getting time by sunrise and sunset utc code
+        const sunR = this.convertTimeFromUTC(sunRise);
+        const sunS  = this.convertTimeFromUTC(sunSet);
 
         //Return sun rise and sun set times
         return {
-            sunR,
-            sunS
+            sunR: sunR.time,
+            sunS: sunS.time
+        }
+    }
+
+    convertTimeFromUTC(utc){
+        const  date = new Date(utc * 1000);
+
+        //Check for hour and minute in case if less than 10 add 0 before
+        const  hour =  date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+        const  min  =  date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+
+        //Concat hours and minutes
+        const  time = `${hour}:${min}`;
+
+        return {
+            time
         }
     }
 
@@ -166,4 +193,5 @@ export class WeatherUI {
                                                 ? this.body.style.backgroundImage = 'url("images/day.jpg")'
                                                 : this.body.style.backgroundImage = 'url("images/night.jpg")';  
     }
+
 }
