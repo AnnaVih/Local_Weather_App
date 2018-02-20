@@ -64,9 +64,9 @@ export class WeatherUI {
 
         //4.Make html snippet with dinamic content recived from Api
         dinamicContent = `
-            <div class="row mt-5">
+            <div class="row mt-4">
                 <div class="col-md-12">
-                    <h3>${weather.name}, ${weather.sys.country}</h3>
+                    <h3 class="freeCodeCamp-app text-left">${weather.name}, ${weather.sys.country}</h3>
                     <p>${this.getDayAndTime().day}, ${this.getDayAndTime().hour}.</p>
                 </div>
                 <div class="col-md-5">
@@ -77,12 +77,12 @@ export class WeatherUI {
                             <p class="weather-description">${weather.weather[0].description}</p>
                     </div>
                 </div>  
-                <div class="col-md-4">
+                <div class="col-6 col-md-4 forecast">
                     <p><span class="weather-forecast">Main:   </span>${weather.weather[0].main}</p>
                     <p><span class="weather-forecast">Pressure:</span> ${weather.main.pressure} hPa</p>
                     <p><span class="weather-forecast">Humidity:</span> ${weather.main.humidity}%</p>
                 </div>
-                <div class="col-md-3">
+                <div class="col-6 col-md-3">
                     <p><span class="weather-forecast">Wind:</span> ${weather.wind.speed}mph</p>
                     <p><span class="weather-forecast">Sunrise:</span> ${sunSetSunRise.sunR}</p>
                     <p><span class="weather-forecast">Sunset:</span> ${sunSetSunRise.sunS}</p>

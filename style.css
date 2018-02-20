@@ -2,16 +2,15 @@
 * {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    color: rgb(54, 54, 54);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
-    line-height: 0.9;
     margin: 0;
     padding: 0;
 }
 
 body {
     background-size: 100% 100vh;
+    color: rgb(54, 54, 54);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 0.9;
 }
 
 p {
@@ -19,13 +18,19 @@ p {
 }
 
 /* Buttons */
+button {
+    border: 0;
+    outline: 0;
+}
+
+.units-type, button {
+    color: grey;
+    cursor: pointer;
+}
 
 #search-btn {
     background: white;
-    border: 0;
-    margin-left: -35px;
-    outline: 0;
-    padding: 7px 0;
+    top: -2px;
 }
 
 #my-geolocation-btn, #gitHub-btn {
@@ -38,16 +43,13 @@ p {
     color: white;
     font-style: italic;
     outline: 0;
-    padding: 6px 17px;
+    padding: 9px 17px;
     transition: all .6s ease-in-out;
 }
 
-#gitHub-btn {
-    width: 100%;
-}
-
-#my-geolocation-btn{
+#my-geolocation-btn, #search-city, .city-input-span {
     width: 170px;
+    position: relative;
 }
 
 #my-geolocation-btn:hover,
@@ -61,11 +63,6 @@ p {
 #my-geolocation-btn:hover,
 #gitHub-btn:hover {
     background:  rgba(0, 0, 0 , .5);
-}
-
-.units-type, button {
-    color: grey;
-    cursor: pointer;
 }
 
 .btn-outline-secondary:focus {
@@ -82,9 +79,15 @@ p {
     width: 75px;
 }
 
-.location-icon {
-    margin-left: 30px;
+.location-icon, #search-btn {
+  position: absolute;
+  right: 5px;
 }
+
+.location-icon {
+    top: 3px;
+}
+
 
 /* Input */
 
@@ -96,7 +99,6 @@ p {
     font-style: italic;
     outline: 0;
     padding: 7px 17px;
-    width: 170px;
 }
 
 /* Main styles */
@@ -108,8 +110,8 @@ p {
     margin: 5vh auto ;
     min-height: 30vh;
     position:relative;
-    width: 70%;
     max-width: 800px;
+    min-width: 290px;
 }
 
 .freeCodeCamp-app, #temperature, .find-weather-by {
@@ -122,13 +124,6 @@ p {
     text-shadow: 1px 1px 1px white;
 }
 
-.find-weather-by {
-    font-size: 25px;
-}
-
-.freeCodeCamp-app, #temperature {
-    font-size: 45px;
-}
 
 .weather-description {
     color: rgb(54, 54, 54);
@@ -138,7 +133,7 @@ p {
 }
 
 .weather-forecast {
-    font-size: 14px;
+    font-size: 13px;
     font-style: normal;
     font-weight: bold;
     text-transform: uppercase;
@@ -146,7 +141,6 @@ p {
 
 .units-type.active {
     color: black;
-    font-size: 25px;
     font-weight: 500;
 }
 
@@ -156,4 +150,60 @@ p {
     box-shadow: 0 6px 10px 0 rgba(221, 54, 54, 0.1);
     color: rgb(66, 5, 5);
     padding: 12px 17px;
+    line-height: 1.1;
 }
+
+
+/************* MEDIA QUERIES *****************
+*********************************************/
+@media only screen and (min-width : 200px) {
+    body {
+        font-size: 14px;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+
+    .weather-forecast {
+        font-size: 12px;
+    }
+
+    .weather-screen, #gitHub-btn,  #my-geolocation-btn, #search-city {
+        width: 100%;
+    }
+
+    h1.freeCodeCamp-app {
+        font-size: 1.7rem;
+    }
+
+    #temperature, .units-type.active, .or-span {
+        font-size: 1.3rem;
+    }
+
+    #my-geolocation-btn, #search-city {
+        margin: 0 !important;
+        text-align: left;
+    }
+
+    span.freeCodeCamp-app {
+        margin: 10px;
+    }
+}
+
+@media only screen and (min-width : 501px) {
+    body {
+        font-size: 16px;
+        background-size: 100% 100vh;
+    }
+
+    #temperature, .units-type.active, .or-span {
+        font-size: 2rem;
+    }
+
+    h1.freeCodeCamp-app {
+        font-size: 2.5rem;
+    }
+
+    #my-geolocation-btn, #search-city {
+        width: 170px;
+}
+
