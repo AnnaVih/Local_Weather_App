@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Local Weater App</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Container -->
+  <div class="container">
+    <!-- Head with Title app -->
+    <head>
+        <div class="row">
+            <div class="col-sm-12 text-center mt-5">
+              <h1 class="freeCodeCamp-app">WEATHER APP</h1>
+            </div>
+        </div>
+    </head>
+    <!-- End Head with Title app -->
+
+    <!-- Alert message -->
+    <div class="row"> 
+      <div class="col-sm-8 offset-sm-2" id="alert">
+          <!-- Place for dinamic alert message -->
+      </div>
+    </div>
+    <!-- End alert message -->
+    
+    <!-- Main  -->
+    <main class="p-3 weather-screen">
+      <div class="row">
+        <div class="col-sm-12 text-center">
+            <h5 class="find-weather-by mb-4">Find weather by:</h5>
+            <button class="mr-3" id="my-geolocation-btn"> My location <i class="fas fa-map-marker-alt fa-lg location-icon"></i> </button><span class="freeCodeCamp-app or-span">OR</span>
+            <span class="city-input-span">
+            <input type="text" id="search-city" class="ml-3" placeholder="Enter a city" title="City is Required!" pattern="^((?!Enter a city).)*$">
+            <button id="search-btn"><i class="fas fa-search fa-lg"></i></button></span>
+        </div>
+      </div>
+
+      <!-- Start place for dinamic content -->
+      <div id="dinamic-content"></div>
+      <!-- End place for dinamic content -->
+
+      <div class="row mt-5" id="gitHub-section">
+        <div class="col-sm-12 text-center">
+           <small> Developed with vanilla JS &amp; hard work &amp; passion by Anna Vihrogonova</small>
+           <p><a href="https://github.com/AnnaVih/Local_Weather_App"  target="_blank" ><button class="mt-3" id="gitHub-btn">Check source code on GitHub</button></a></p>
+        </div>
+      </div>
+    </main>
+    <!-- End of main -->
+  </div>
+  <!-- End container -->
+  
+  
+  
+  <script src="build/app.bundle.js"></script>
+</body>
+</html>

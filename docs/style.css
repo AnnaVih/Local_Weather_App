@@ -1,0 +1,210 @@
+/* General style */
+* {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-size: 100% 100vh;
+    color: rgb(54, 54, 54);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 0.9;
+}
+
+p {
+    font-style: italic;
+}
+
+/* Buttons */
+button {
+    border: 0;
+    outline: 0;
+}
+
+.units-type, button {
+    color: grey;
+    cursor: pointer;
+}
+
+#search-btn {
+    background: white;
+    top: -2px;
+}
+
+#my-geolocation-btn, #gitHub-btn {
+    -o-transition: all .6s ease-in-out;
+    -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
+    -webkit-transition: all .6s ease-in-out;
+    background:  rgba(0, 0, 0 , .3);
+    border: 0;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
+    color: white;
+    font-style: italic;
+    outline: 0;
+    padding: 9px 17px;
+    transition: all .6s ease-in-out;
+}
+
+#my-geolocation-btn, #search-city, .city-input-span {
+    width: 170px;
+    position: relative;
+}
+
+#my-geolocation-btn:hover,
+#my-geolocation-btn:focus,
+#gitHub-btn:hover,
+#gitHub-btn:focus {
+    color: #fff;
+    outline: 0;
+}
+
+#my-geolocation-btn:hover,
+#gitHub-btn:hover {
+    background:  rgba(0, 0, 0 , .5);
+}
+
+.btn-outline-secondary:focus {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+
+/* Icons */
+
+.weather-icon {
+    float: left;
+    height: 75px;
+    width: 75px;
+}
+
+.location-icon, #search-btn {
+  position: absolute;
+  right: 5px;
+}
+
+.location-icon {
+    top: 3px;
+}
+
+
+/* Input */
+
+#search-city {
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
+    -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
+    background: #fff;
+    border: 0;
+    font-style: italic;
+    outline: 0;
+    padding: 7px 17px;
+}
+
+/* Main styles */
+
+.weather-screen {
+    -webkit-box-shadow: 0 3px 19px -1px;
+    background-color: rgba(255, 255, 255, .6);
+    box-shadow: 0 3px 19px -1px;
+    margin: 5vh auto ;
+    min-height: 30vh;
+    position:relative;
+    max-width: 800px;
+    min-width: 290px;
+}
+
+.freeCodeCamp-app, #temperature, .find-weather-by {
+    color: rgb(34, 33, 33); 
+    font-family: 'Helvetica Neue', sans-serif; 
+    font-weight: bold; 
+    letter-spacing: -1px; 
+    line-height: 1.3; 
+    text-align: center; 
+    text-shadow: 1px 1px 1px white;
+}
+
+
+.weather-description {
+    color: rgb(54, 54, 54);
+    font-size: 17px;
+    font-weight: 100;
+    margin-left: 25%;
+}
+
+.weather-forecast {
+    font-size: 13px;
+    font-style: normal;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.units-type.active {
+    color: black;
+    font-weight: 500;
+}
+
+.alert-message {
+    background:  rgba(255, 114, 114, 0.705);
+    border: 0;
+    box-shadow: 0 6px 10px 0 rgba(221, 54, 54, 0.1);
+    color: rgb(66, 5, 5);
+    padding: 12px 17px;
+    line-height: 1.1;
+}
+
+
+/************* MEDIA QUERIES *****************
+*********************************************/
+@media only screen and (min-width : 200px) {
+    body {
+        font-size: 14px;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+
+    .weather-forecast {
+        font-size: 12px;
+    }
+
+    .weather-screen, #gitHub-btn,  #my-geolocation-btn, #search-city {
+        width: 100%;
+    }
+
+    h1.freeCodeCamp-app {
+        font-size: 1.7rem;
+    }
+
+    #temperature, .units-type.active, .or-span {
+        font-size: 1.3rem;
+    }
+
+    #my-geolocation-btn, #search-city {
+        margin: 0 !important;
+        text-align: left;
+    }
+
+    span.freeCodeCamp-app {
+        margin: 10px;
+    }
+}
+
+@media only screen and (min-width : 501px) {
+    body {
+        font-size: 16px;
+        background-size: 100% 100vh;
+    }
+
+    #temperature, .units-type.active, .or-span {
+        font-size: 2rem;
+    }
+
+    h1.freeCodeCamp-app {
+        font-size: 2.5rem;
+    }
+
+    #my-geolocation-btn, #search-city {
+        width: 170px;
+    }
+}
+
