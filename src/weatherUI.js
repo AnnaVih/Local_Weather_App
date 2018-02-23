@@ -70,7 +70,7 @@ export class WeatherUI {
                     <p>${this.getDayAndTime().day}, ${this.getDayAndTime().hour}.</p>
                 </div>
                 <div class="col-md-5">
-                    <img src="http://openweathermap.org/img/w/${weather.weather[0].icon}.png" class="weather-icon">
+                    <img src="https://openweathermap.org/img/w/${weather.weather[0].icon}.png" class="weather-icon">
                     <div id="units">
                             <span id="temperature">${this.temp}</span> 
                             <span id="celcius" class="active units-type">&#8451;</span> | <span id="fahrenheit" class="units-type"> &#8457;</span>
