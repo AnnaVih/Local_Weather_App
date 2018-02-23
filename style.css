@@ -34,7 +34,7 @@ button {
     -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
     -webkit-transition: all .6s ease-in-out;
     transition: all .6s ease-in-out;
-    background:  rgba(0, 0, 0, .3);
+    background:  grey;
     border: 0;
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
     color: white;
@@ -170,7 +170,8 @@ h1.freeCodeCamp-app {
 .alert-message {
     background:  rgba(255, 114, 114, 0.705);
     border: 0;
-    box-shadow: 0 6px 10px 0 rgba(221, 54, 54, 0.1);
+    -webkit-box-shadow: 0 6px 10px 0 rgba(221, 54, 54, 0.1);
+            box-shadow: 0 6px 10px 0 rgba(221, 54, 54, 0.1);
     color: rgb(66, 5, 5);
     padding: 12px 17px;
     line-height: 1.1;
