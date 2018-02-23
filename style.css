@@ -19,6 +19,12 @@ p {
 }
 
 /* Buttons */
+
+input[type="text"] {
+    -webkit-appearance:none;
+    -webkit-border-radius:0; 
+}
+
 button {
     border: 0;
     outline: 0;
@@ -229,7 +235,7 @@ h1.freeCodeCamp-app {
     }
 
     #location-icon, #search-btn{
-        height: 30px;
+        height: 31px;
         width: 100px;
     }
 }
