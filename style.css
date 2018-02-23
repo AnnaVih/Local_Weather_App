@@ -89,8 +89,8 @@ button {
 
 .weather-icon {
     float: left;
-    height: 75px;
-    width: 75px;
+    height: 50px;
+    width: 50px;
 }
 
 #location-icon, #search-btn {
@@ -218,7 +218,7 @@ h1.freeCodeCamp-app {
 
     body {
         font-size: 14px;
-        background-size: cover;
+        background-size: 100% 100%;
         background-attachment: fixed;
     }
 
