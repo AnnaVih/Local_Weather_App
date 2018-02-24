@@ -216,7 +216,7 @@ h1.freeCodeCamp-app {
 
     .weather-screen {
         width: 100%;
-        margin-top: 15vh;
+        margin-top: 5vh;
     }
 
     #my-geolocation-btn, #search-city {
