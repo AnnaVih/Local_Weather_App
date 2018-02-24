@@ -202,8 +202,8 @@ export class WeatherUI {
 
         //Check for current time if it between sun rise and sun set make dinamic background image
         time > this.sunRise && time < this.sunSet 
-                                                ? (this.html.style.background = 'url("images/day.jpg")') && (this.html.style.backgroundSize = '100% 100%')
-                                                : (this.html.style.background = 'url("images/night.jpg")') && (this.html.style.backgroundSize = '100% 100vh');  
+                                                ? this.html.style.background = 'url("images/day.jpg")'
+                                                : this.html.style.background = 'url("images/night.jpg")';  
     }
 
 }
