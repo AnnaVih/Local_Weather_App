@@ -123,7 +123,6 @@ document.addEventListener('keypress',  function(event) {
     }
 });
 
-document.addEventListener('DOMContentLoaded', setBackgroundImage);
 
 
 

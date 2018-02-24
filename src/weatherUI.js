@@ -2,7 +2,7 @@
 
 export class WeatherUI {
     constructor() {
-                this.body       = document.querySelector('body');
+                this.html       = document.querySelector('html');
                 this.dinamicDiv = document.querySelector('#dinamic-content');
                 this.cityInput  = document.querySelector('#search-city');
                 this.temp;  
@@ -10,7 +10,9 @@ export class WeatherUI {
                 this.temperature;
                 this.unitsType;
                 this.celcius;
-                this.fahrenheit;        
+                this.fahrenheit; 
+                this.sunRise;
+                this.sunSet;       
     }
 
 
@@ -62,7 +64,13 @@ export class WeatherUI {
         //3.Getting sun set and sun rise times
         const sunSetSunRise = this.sunSetAndSunriseTime(weather.sys.sunrise,weather.sys.sunset);
 
-        //4.Make html snippet with dinamic content recived from Api
+        //4.Set sunRise and sunSet time
+        this.sunRise = sunSetSunRise.sunR;
+        this.sunSet = sunSetSunRise.sunS;
+
+        this.addBackgroundImage();
+
+        //5.Make html snippet with dinamic content recived from Api
         dinamicContent = `
             <div class="row mt-4">
                 <div class="col-md-12">
@@ -84,22 +92,22 @@ export class WeatherUI {
                 </div>
                 <div class="col-6 col-md-3">
                     <p><span class="weather-forecast">Wind:</span> ${weather.wind.speed}mph</p>
-                    <p><span class="weather-forecast">Sunrise:</span> ${sunSetSunRise.sunR}</p>
-                    <p><span class="weather-forecast">Sunset:</span> ${sunSetSunRise.sunS}</p>
+                    <p><span class="weather-forecast">Sunrise:</span> ${this.sunRise}</p>
+                    <p><span class="weather-forecast">Sunset:</span> ${this.sunSet}</p>
                 </div>
             </div>`;
 
-        //5.Pass dinamic snippet into created div
+        //6.Pass dinamic snippet into created div
         this.dinamicDiv.innerHTML = dinamicContent;
 
-        //6.Get selectors and attach them to this constructor class for future usage
+        //7.Get selectors and attach them to this constructor class for future usage
         this.cityName    = documentEl.querySelector('#cityName');
         this.temperature = documentEl.querySelector('#temperature');
         this.unitsType   = documentEl.querySelectorAll('.units-type');
         this.celcius     = documentEl.querySelector('#celcius');
         this.fahrenheit  = documentEl.querySelector('#fahrenheit');
 
-        //7.Clear input field 
+        //8.Clear input field 
         this.cityInput.value = '';
     }
 
@@ -187,11 +195,15 @@ export class WeatherUI {
 
 
     addBackgroundImage() {
+        //1.Get current date
         const date = new Date();
-        //Check for current hours if it between 6am and 18pm set day background image, otherwise set night.
-        date.getHours() > 6 && date.getHours() < 18 
-                                                ? this.body.style.backgroundImage = 'url("images/day.jpg")'
-                                                : this.body.style.backgroundImage = 'url("images/night.jpg")';  
+        //2.Get current time
+        const time = `${date.getHours()}:${date.getMinutes()}`;
+
+        //Check for current time if it between sun rise and sun set make dinamic background image
+        time > this.sunRise && time < this.sunSet 
+                                                ? (this.html.style.background = 'url("images/1.jpg")') && (this.html.style.backgroundSize = '100% 100%')
+                                                : (this.html.style.background = 'url("images/night.jpg")') && (this.html.style.backgroundSize = '100% 100vh');  
     }
 
 }
