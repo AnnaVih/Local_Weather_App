@@ -231,5 +231,9 @@ h1.freeCodeCamp-app {
         height: 31px;
         width: 100px;
     }
+
+    h1.freeCodeCamp-app {
+        font-size: 2.5rem;
+    }
 }
 
