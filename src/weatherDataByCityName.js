@@ -3,7 +3,7 @@
 //Class for getting data by City name
 class GetWeatherByCityName {
     constructor(city) {
-        this.apiKey = "edaef03bbd44981db95e799ae52c9ce0";
+        this.apiKey = config.MY_WEATHER_KEY;
         this.city = city;
     }
 

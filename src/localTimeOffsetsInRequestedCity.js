@@ -3,7 +3,7 @@
 //Class for getting data by City name
 class GetTimeOffsetsInRequestedCity {
     constructor(lat,long,timestamp) {
-        this.apiKey    = "AIzaSyDXwAyBnaejuPPdBkm7qE5E5KjP8vhR6pM";
+        this.apiKey    = config.MY_ZONE_OFFSETS_KEY;
         this.lat       = lat;
         this.long      = long;
         this.timestamp = timestamp;

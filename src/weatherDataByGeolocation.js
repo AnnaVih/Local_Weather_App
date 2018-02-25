@@ -3,7 +3,7 @@
 //Class for getting data by user geolocation
 class GetWeatherByLocation {
     constructor(latitude, longtitude) {
-        this.apiKey = "edaef03bbd44981db95e799ae52c9ce0";
+        this.apiKey = config.MY_WEATHER_KEY;
         this.latitude = latitude;
         this.longtitude = longtitude;
     }
