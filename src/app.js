@@ -45,24 +45,27 @@ function getWeatherByLocation() {
 
                                     //4.3 Get zone offsets results from promise
                                     localTimeOffSets.get()
-                                                    .then(function extractZoneOffsetsData(resultsZone){
+                                                    .then(function extractZoneOffsetsData(resultsZoneOffSets){
 
                                                     //4.4 Set local time 
-                                                    newWeatherUI.getLocalTimeInRequestedCity(resultsZone);
+                                                    newWeatherUI.getLocalTimeInRequestedCity(resultsZoneOffSets);
 
-                                                    //4.5 Display all content on UI
+                                                    //4.5 Set local sunRise and sunSet times
+                                                    newWeatherUI.setSunSetAndSunriseTime(resultsZoneOffSets);
+
+                                                    //4.6 Display all content on UI
                                                     newWeatherUI.display(resultsWeather);
 
-                                                    //4.6 Toggle active class on click of units type
+                                                    //4.7 Toggle active class on click of units type
                                                     newWeatherUI.unitsType.forEach(unit => unit.addEventListener('click', switchBetweenUnits));
                                                 })
 
-                                                //Catch error in case if no time data recieved
+                                                //4.8 Catch error in case if no time data recieved
                                                 .catch(function extractZoneOffsetsData(err){
                                                 console.log(err);
                                                 }); 
                             })
-                            //Catch error in case if no weather data recieved
+                            //4.9 Catch error in case if no weather data recieved
                             .catch(function extractWeatherData(err){
                                 newWeatherUI.alertMessage('Please, check your internet connection or reload page', 'alert-message');
                                 console.log(err);
@@ -88,7 +91,7 @@ function getWeatherByCity() {
     //4.Recieve data and display it on UI
     weatherByCityName.get()
                     .then(function extractWeatherData(resultsWeather){
-
+                        console.log(resultsWeather);
                             //4.1 Get latitude, longitude and timeStamp
                             newWeatherUI.getResponseValueFromWeather(resultsWeather);
 
@@ -102,20 +105,23 @@ function getWeatherByCity() {
                                                 //4.4 Set local time 
                                                 newWeatherUI.getLocalTimeInRequestedCity(resultsZoneOffSets);
 
-                                                //4.5 Display all content on UI
+                                                //4.5 Set local sunRise and sunSet times
+                                                newWeatherUI.setSunSetAndSunriseTime(resultsZoneOffSets);
+
+                                                //4.6 Display all content on UI
                                                 newWeatherUI.display(resultsWeather);
 
-                                                //4.6 Toggle active class on click of units type
+                                                //4.7 Toggle active class on click of units type
                                                 newWeatherUI.unitsType.forEach(unit => unit.addEventListener('click', switchBetweenUnits));
                                             })
 
-                                            //Catch error in case if no time data recieved
+                                            //4.8 Catch error in case if no time data recieved
                                             .catch(function extractZoneOffsetsData(err){
                                                 newWeatherUI.alertMessage('Please, enter correct city', 'alert-message');
                                                 console.log(err);
                                             }); 
 
-                    //Catch error in case if no weather data recieved
+                    //4.9Catch error in case if no weather data recieved
                     }) 
                     .catch(function extractWeatherData(err){
                         console.log(err);

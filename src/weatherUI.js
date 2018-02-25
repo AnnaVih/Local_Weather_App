@@ -11,14 +11,17 @@ export class WeatherUI {
                 this.unitsType;
                 this.celcius;
                 this.fahrenheit; 
-                this.sunRise;
-                this.sunSet;
                 this.latitude;
                 this.longitude;
-                this.timeStamp; 
+                this.timeStamp;
+                this.sunRiseTimeStamp;
+                this.sunSetTimeStamp;
                 this.day;
                 this.hour; 
-                this.minutes;     
+                this.minutes; 
+                this.sunRise;
+                this.sunSet; 
+                   
     }
 
 
@@ -69,6 +72,10 @@ export class WeatherUI {
 
         //3.Save temperature state in Celcius
         this.temp = Math.round(weather.main.temp);
+
+        //4.Set Sunrise and sunset timestamp data for converting to right time
+        this.sunRiseTimeStamp = weather.sys.sunrise;
+        this.sunSetTimeStamp  = weather.sys.sunset;
     }
 
 
@@ -77,13 +84,6 @@ export class WeatherUI {
         const documentEl = document;
 
         let dinamicContent;
-
-        //3.Getting sun set and sun rise times
-        const sunSetSunRise = this.sunSetAndSunriseTime(weather.sys.sunrise,weather.sys.sunset);
-
-        //4.Set sunRise and sunSet time
-        this.sunRise = sunSetSunRise.sunR;
-        this.sunSet = sunSetSunRise.sunS;
 
         //5. Add dinamicly background image
         this.addBackgroundImage();
@@ -186,52 +186,49 @@ export class WeatherUI {
     }
 
     getLocalTimeInRequestedCity(offSetsData) {
+        //1. Call function for getting day, hour and minutes
+        const localDate = this.convertTimeStampDateToLocalDate(offSetsData, this.timeStamp);
+
+        //2.Create list of days
+        const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", 
+        "Thursday", "Friday", "Saturday"];
+
+        //3.Set day, hours, minutes to constructor
+        this.day     = dayNames[localDate.localDay];
+        this.hour    = `${localDate.hours}:00`;
+        this.minutes = localDate.minutes;
+    }
+
+    setSunSetAndSunriseTime(offSetsData) {
+       //1. Call function for getting sunrise hours and minutes
+       const localSunRiseDate = this.convertTimeStampDateToLocalDate(offSetsData, this.sunRiseTimeStamp);
+
+        //2. Call function for getting sunset hours and minutes
+       const localSunSetDate  = this.convertTimeStampDateToLocalDate(offSetsData, this.sunSetTimeStamp);
+
+        //3.Set sunRise and sunSet time  to constructor
+        this.sunRise =  `${localSunRiseDate.hours}:${localSunRiseDate.minutes}`;
+        this.sunSet  =  `${localSunSetDate.hours}:${localSunSetDate.minutes}`;
+    }
+
+    convertTimeStampDateToLocalDate(dataOffsets, timeStampData) {
         //1. get DST and time zone offsets in milliseconds
-        const offsets = offSetsData.dstOffset * 1000 + Math.abs(offSetsData.rawOffset) * 1000 ;
-        console.log(offSetsData);
+        const offsets = dataOffsets.dstOffset * 1000 + Math.abs(dataOffsets.rawOffset) * 1000 ;
+
         //2. Date object containing current time of target location
-        const localdate = new Date(this.timeStamp * 1000 + offsets);
+        const localdate = new Date(timeStampData * 1000 + offsets);
 
         //3.Getting hours and minutes
         const hours    =  localdate.getHours() < 10 ? '0' + localdate.getHours() : localdate.getHours();
         const minutes  =  localdate.getMinutes() < 10 ? '0' + localdate.getMinutes() : localdate.getMinutes();
 
-        //4.Create list of days
-        const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", 
-        "Thursday", "Friday", "Saturday"];
-
-        //5.Set day, hours, minutes to constructor
-        this.day  = dayNames[localdate.getDay()];
-        this.hour = `${hours}:00`;
-        this.minutes = minutes;
-    }
-
-    sunSetAndSunriseTime(sunRise, sunSet) {
-        //1.Getting time by sunrise and sunset utc code
-        const sunR = this.convertTimeFromUTC(sunRise);
-        const sunS  = this.convertTimeFromUTC(sunSet);
-
-        //2.Return sun rise and sun set times
+        //4.Return data
         return {
-            sunR: sunR.time,
-            sunS: sunS.time
+            localDay: localdate.getDay(),
+            hours,
+            minutes
         }
-    }
 
-    convertTimeFromUTC(utc){
-        const  date = new Date(utc * 1000);
-
-        //1.Check for hour and minute in case if less than 10 add 0 before
-        const  hour =  date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
-        const  min  =  date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
-
-        //2.Concat hours and minutes
-        const  time = `${hour}:${min}`;
-
-        //3.Return time
-        return {
-            time
-        }
     }
 
 }
