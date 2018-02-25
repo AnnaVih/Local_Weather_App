@@ -111,14 +111,15 @@ function getWeatherByCity() {
 
                                             //Catch error in case if no time data recieved
                                             .catch(function extractZoneOffsetsData(err){
+                                                newWeatherUI.alertMessage('Please, enter correct city', 'alert-message');
                                                 console.log(err);
                                             }); 
 
                     //Catch error in case if no weather data recieved
                     }) 
                     .catch(function extractWeatherData(err){
-                        // newWeatherUI.alertMessage('Please, type correct city', 'alert-message');
                         console.log(err);
+                        newWeatherUI.alertMessage('Please, enter correct city', 'alert-message');
                     });  
 
     }        
