@@ -208,6 +208,10 @@ h1.freeCodeCamp-app {
 *********************************************/
 
 @media only screen  and (max-width: 767px) { 
+    html{
+        background-attachment: unset !important;
+    }
+    
 
     body {
         font-size: 14px;
