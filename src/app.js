@@ -9,6 +9,8 @@ import { GetWeatherByLocation } from './weatherDataByGeolocation';
 
 import { GetWeatherByCityName } from './weatherDataByCityName'; 
 
+import { GetTimeOffsetsInRequestedCity } from './localTimeOffsetsInRequestedCity';
+
 
 //Make instance of weatherUI class
 const newWeatherUI = new WeatherUI();
@@ -33,15 +35,35 @@ function getWeatherByLocation() {
 
         //4. Getting data from Api server by geolocation and display on UI
         weatherDataByLocation.get()
-                            .then(function extractData(results){
-                                // console.log(results);
-                                newWeatherUI.display(results);
+                            .then(function extractWeatherData(resultsWeather){
+                                    
+                                    //4.1 Get latitude, longitude and timeStamp
+                                    newWeatherUI.getResponseValueFromWeather(resultsWeather);
 
-                                //Toggle active class on click of units type
-                                newWeatherUI.unitsType.forEach(unit => unit.addEventListener('click', switchBetweenUnits));
+                                    //4.2 Pass them into new instanse of GetTimeOffsetsInRequestedCity for getting zone offsets
+                                    const localTimeOffSets = new GetTimeOffsetsInRequestedCity(newWeatherUI.latitude, newWeatherUI.longitude, newWeatherUI.timeStamp);
+
+                                    //4.3 Get zone offsets results from promise
+                                    localTimeOffSets.get()
+                                                    .then(function extractZoneOffsetsData(resultsZone){
+
+                                                    //4.4 Set local time 
+                                                    newWeatherUI.getLocalTimeInRequestedCity(resultsZone);
+
+                                                    //4.5 Display all content on UI
+                                                    newWeatherUI.display(resultsWeather);
+
+                                                    //4.6 Toggle active class on click of units type
+                                                    newWeatherUI.unitsType.forEach(unit => unit.addEventListener('click', switchBetweenUnits));
+                                                })
+
+                                                //Catch error in case if no time data recieved
+                                                .catch(function extractZoneOffsetsData(err){
+                                                console.log(err);
+                                                }); 
                             })
-
-                            .catch(function extractData(err){
+                            //Catch error in case if no weather data recieved
+                            .catch(function extractWeatherData(err){
                                 newWeatherUI.alertMessage('Please, check your internet connection or reload page', 'alert-message');
                                 console.log(err);
                             });
@@ -65,18 +87,40 @@ function getWeatherByCity() {
 
     //4.Recieve data and display it on UI
     weatherByCityName.get()
-                    .then(function extractData(results){
-                    // console.log(results);
-                    newWeatherUI.display(results);
+                    .then(function extractWeatherData(resultsWeather){
 
-                    //Toggle active class on click of units type
-                    newWeatherUI.unitsType.forEach(unit => unit.addEventListener('click', switchBetweenUnits));
+                            //4.1 Get latitude, longitude and timeStamp
+                            newWeatherUI.getResponseValueFromWeather(resultsWeather);
+
+                            //4.2 Pass them into new instanse of GetTimeOffsetsInRequestedCity for getting zone offsets
+                            const localTimeOffSets = new GetTimeOffsetsInRequestedCity(newWeatherUI.latitude, newWeatherUI.longitude, newWeatherUI.timeStamp);
+
+                            //4.3 Get zone offsets results from promise
+                            localTimeOffSets.get()
+                                            .then(function extractZoneOffsetsData(resultsZoneOffSets){
+
+                                                //4.4 Set local time 
+                                                newWeatherUI.getLocalTimeInRequestedCity(resultsZoneOffSets);
+
+                                                //4.5 Display all content on UI
+                                                newWeatherUI.display(resultsWeather);
+
+                                                //4.6 Toggle active class on click of units type
+                                                newWeatherUI.unitsType.forEach(unit => unit.addEventListener('click', switchBetweenUnits));
+                                            })
+
+                                            //Catch error in case if no time data recieved
+                                            .catch(function extractZoneOffsetsData(err){
+                                                console.log(err);
+                                            }); 
+
+                    //Catch error in case if no weather data recieved
                     }) 
-                    .catch(function extractData(err){
-                        newWeatherUI.alertMessage('Please, type correct city', 'alert-message');
-
+                    .catch(function extractWeatherData(err){
+                        // newWeatherUI.alertMessage('Please, type correct city', 'alert-message');
                         console.log(err);
                     });  
+
     }        
 }
 
