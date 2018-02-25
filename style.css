@@ -10,6 +10,7 @@ html{
     background: url('images/weather.jpeg');
     background-size: cover !important;
     background-position: 100% 100% !important;
+    background-attachment: fixed !important;
     width: 100%;
     height: 100%;
     position: relative;
