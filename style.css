@@ -214,12 +214,12 @@ h1.freeCodeCamp-app {
     
 
     body {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .weather-screen {
         width: 100%;
-        margin-top: 5vh;
+        margin: 5% auto;
     }
 
     #my-geolocation-btn, #search-city {
@@ -236,8 +236,13 @@ h1.freeCodeCamp-app {
     }
 
     h1.freeCodeCamp-app {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
+
+    #temperature, .units-type.active, .or-span, .freeCodeCamp-app {
+        font-size: 1.4rem;
+    }
+
 }
 
 @media only screen  and (max-width: 500px) { 
@@ -245,6 +250,10 @@ h1.freeCodeCamp-app {
         background-attachment: unset!important;
         background-size: unset !important;
         background-position: initial !important;
+    }
+
+    #gitHub-section {
+        margin-top: 5% !important;
     }
 }
 
