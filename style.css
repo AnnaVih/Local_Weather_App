@@ -240,3 +240,11 @@ h1.freeCodeCamp-app {
     }
 }
 
+@media only screen  and (max-width: 500px) { 
+    html {
+        background-attachment: unset!important;
+        background-size: unset !important;
+        background-position: initial !important;
+    }
+}
+
