@@ -20,7 +20,8 @@ const newWeatherUI = new WeatherUI();
 /***************  GETTING WEATHER DATA ************************
  *************************************************************/
 
-/********** Getting data from Api server by CURRENT LOCATION *********/
+
+/********** 1. Getting data from Api server by CURRENT LOCATION *********/
 
 function getWeatherByLocation() {
 
@@ -35,47 +36,17 @@ function getWeatherByLocation() {
 
         //4. Getting data from Api server by geolocation and display on UI
         weatherDataByLocation.get()
-                            .then(function extractWeatherData(resultsWeather){
-                                    
-                                    //4.1 Get latitude, longitude and timeStamp
-                                    newWeatherUI.getResponseValueFromWeather(resultsWeather);
-
-                                    //4.2 Pass them into new instanse of GetTimeOffsetsInRequestedCity for getting zone offsets
-                                    const localTimeOffSets = new GetTimeOffsetsInRequestedCity(newWeatherUI.latitude, newWeatherUI.longitude, newWeatherUI.timeStamp);
-
-                                    //4.3 Get zone offsets results from promise
-                                    localTimeOffSets.get()
-                                                    .then(function extractZoneOffsetsData(resultsZoneOffSets){
-
-                                                    //4.4 Set local time 
-                                                    newWeatherUI.getLocalTimeInRequestedCity(resultsZoneOffSets);
-
-                                                    //4.5 Set local sunRise and sunSet times
-                                                    newWeatherUI.setSunSetAndSunriseTime(resultsZoneOffSets);
-
-                                                    //4.6 Display all content on UI
-                                                    newWeatherUI.display(resultsWeather);
-
-                                                    //4.7 Toggle active class on click of units type
-                                                    newWeatherUI.unitsType.forEach(unit => unit.addEventListener('click', switchBetweenUnits));
-                                                })
-
-                                                //4.8 Catch error in case if no time data recieved
-                                                .catch(function extractZoneOffsetsData(err){
-                                                console.log(err);
-                                                }); 
-                            })
-                            //4.9 Catch error in case if no weather data recieved
-                            .catch(function extractWeatherData(err){
-                                newWeatherUI.alertMessage('Please, check your internet connection or reload page', 'alert-message');
-                                console.log(err);
+                            .then(extractWeatherData)
+                            //4.1 Catch error in case if no weather data recieved
+                            .catch(function extractWeatherDataErr(err) {
+                                newWeatherUI.alertMessage('Please, check your internet connection or reload page', 'alert-message')
                             });
     });
 }
 
 
 
-/************** Getting data from Api server by CITY NAME **********/
+/************** 2.Getting data from Api server by CITY NAME **********/
 
 function getWeatherByCity() {
 
@@ -83,57 +54,59 @@ function getWeatherByCity() {
     const cityName = newWeatherUI.cityInput.value;
 
     //2.If city name value is true continue
-    if(cityName){
+    if(cityName) {
 
     //3.Make new instance and pass values
     const weatherByCityName = new GetWeatherByCityName(cityName);
 
     //4.Recieve data and display it on UI
     weatherByCityName.get()
-                    .then(function extractWeatherData(resultsWeather){
-                        console.log(resultsWeather);
-                            //4.1 Get latitude, longitude and timeStamp
-                            newWeatherUI.getResponseValueFromWeather(resultsWeather);
-
-                            //4.2 Pass them into new instanse of GetTimeOffsetsInRequestedCity for getting zone offsets
-                            const localTimeOffSets = new GetTimeOffsetsInRequestedCity(newWeatherUI.latitude, newWeatherUI.longitude, newWeatherUI.timeStamp);
-
-                            //4.3 Get zone offsets results from promise
-                            localTimeOffSets.get()
-                                            .then(function extractZoneOffsetsData(resultsZoneOffSets){
-
-                                                //4.4 Set local time 
-                                                newWeatherUI.getLocalTimeInRequestedCity(resultsZoneOffSets);
-
-                                                //4.5 Set local sunRise and sunSet times
-                                                newWeatherUI.setSunSetAndSunriseTime(resultsZoneOffSets);
-
-                                                //4.6 Display all content on UI
-                                                newWeatherUI.display(resultsWeather);
-
-                                                //4.7 Toggle active class on click of units type
-                                                newWeatherUI.unitsType.forEach(unit => unit.addEventListener('click', switchBetweenUnits));
-                                            })
-
-                                            //4.8 Catch error in case if no time data recieved
-                                            .catch(function extractZoneOffsetsData(err){
-                                                newWeatherUI.alertMessage('Please, enter correct city', 'alert-message');
-                                                console.log(err);
-                                            }); 
-
-                    //4.9Catch error in case if no weather data recieved
-                    }) 
-                    .catch(function extractWeatherData(err){
-                        console.log(err);
+                     .then(extractWeatherData) 
+                     .catch(function extractWeatherDataErr(err) {
                         newWeatherUI.alertMessage('Please, enter correct city', 'alert-message');
-                    });  
-
+                        console.log(err);
+                    });
     }        
 }
 
 
+// Reusable function for extracting data from api
 
-// Switch temperature Between Celcius and Fahrenheit and vice versa
+function extractWeatherData(resultsWeather){
+                   
+    //1. Get latitude, longitude and timeStamp
+    newWeatherUI.getResponseValueFromWeather(resultsWeather);
+
+    //2. Pass them into new instanse of GetTimeOffsetsInRequestedCity for getting zone offsets
+    const localTimeOffSets = new GetTimeOffsetsInRequestedCity(newWeatherUI.latitude, newWeatherUI.longitude, newWeatherUI.timeStamp);
+
+    //3. Get zone offsets results from promise
+    localTimeOffSets.get()
+                    .then(function extractZoneOffsetsData(resultsZoneOffSets){
+
+                    //3.1 Set local time 
+                    newWeatherUI.getLocalTimeInRequestedCity(resultsZoneOffSets);
+
+                    //3.2 Set local sunRise and sunSet times
+                    newWeatherUI.setSunSetAndSunriseTime(resultsZoneOffSets);
+
+                    //3.2 Display all content on UI
+                    newWeatherUI.display(resultsWeather);
+
+                    //3.3 Toggle active class on click of units type
+                    newWeatherUI.unitsType.forEach(unit => unit.addEventListener('click', switchBetweenUnits));
+                })
+
+                //4. Catch error in case if no time data recieved
+                .catch(function extractZoneOffsetsData(err){
+                    console.log(err);
+                }); 
+}
+
+
+/******************** Switch temperature Between ******************************
+ * ************Metric(Celcius) and Imperial(Fahrenheit) units and vice versa **************************/
+
 function switchBetweenUnits() {
     //Check if this units not active
     if( !(this.classList.contains('active')) && this.id === 'fahrenheit' ){

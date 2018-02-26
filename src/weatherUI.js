@@ -5,12 +5,14 @@ export class WeatherUI {
                 this.html       = document.querySelector('html');
                 this.dinamicDiv = document.querySelector('#dinamic-content');
                 this.cityInput  = document.querySelector('#search-city');
+                this.wind;
                 this.temp;  
                 this.cityName;
                 this.temperature;
                 this.unitsType;
                 this.celcius;
                 this.fahrenheit; 
+                this.windSpeed;
                 this.latitude;
                 this.longitude;
                 this.timeStamp;
@@ -76,6 +78,9 @@ export class WeatherUI {
         //4.Set Sunrise and sunset timestamp data for converting to right time
         this.sunRiseTimeStamp = weather.sys.sunrise;
         this.sunSetTimeStamp  = weather.sys.sunset;
+
+        //5. Set wind value in metric
+        this.windSpeed = weather.wind.speed;
     }
 
 
@@ -109,7 +114,7 @@ export class WeatherUI {
                     <p><span class="weather-forecast">Humidity:</span> ${weather.main.humidity}%</p>
                 </div>
                 <div class="col-6 col-md-3">
-                    <p><span class="weather-forecast">Wind:</span> ${weather.wind.speed}mph</p>
+                    <p><span class="weather-forecast">Wind:</span><span id="wind"> ${this.windSpeed} m/s</span></p>
                     <p><span class="weather-forecast">Sunrise:</span> ${this.sunRise}</p>
                     <p><span class="weather-forecast">Sunset:</span> ${this.sunSet}</p>
                 </div>
@@ -124,6 +129,7 @@ export class WeatherUI {
         this.unitsType   = documentEl.querySelectorAll('.units-type');
         this.celcius     = documentEl.querySelector('#celcius');
         this.fahrenheit  = documentEl.querySelector('#fahrenheit');
+        this.wind        = documentEl.querySelector('#wind');
 
         //9.Clear input field 
         this.cityInput.value = '';
@@ -135,14 +141,17 @@ export class WeatherUI {
         //1.Remove active class from fahrenheit and add to celcius
         this.toggleClassess(this.celcius, this.fahrenheit);
 
-        //2.Basic algorithm to convert from Celcius to Fahrenheit
-        const cToFahr = Math.round(this.temp * 9 / 5 + 32);
+        //2.Basic algorithm to convert temperature from Celcius to Fahrenheit
+        this.temp = Math.round(this.temp * 9 / 5 + 32);
 
         //3.Display temperature in Fahrenheit
-        this.temperature.textContent = cToFahr;
+        this.temperature.textContent = this.temp;
 
-        //4.Change state of temperature
-        this.temp = cToFahr;
+        //4. Basic algorithm to convert wind speed from meter per second to miles per hour
+        this.windSpeed = this.windSpeed / 0.44704;
+
+        //5.Display wind speed in miles per hour
+        this.wind.textContent = ` ${Math.round(this.windSpeed)} mph`;
     }
 
 
@@ -151,14 +160,17 @@ export class WeatherUI {
         this.toggleClassess(this.fahrenheit, this.celcius);
 
         //2.Basic algorithm to convert from Fahrenheit to Celcius
-        const fToCel = Math.round((this.temp - 32) * 5 / 9);
+        this.temp = Math.round((this.temp - 32) * 5 / 9);
 
         //3.Display temperature in Celcius
-        this.temperature.textContent = fToCel;
+        this.temperature.textContent = this.temp;
 
-        //4.Reset state of temperature
-        this.temp = fToCel;
-    }  
+        //4. Basic algorithm to convert wind speed from meter per second to miles per hour
+        this.windSpeed = this.windSpeed * 0.44704;
+
+        //5.Display wind speed in miles per hour
+        this.wind.textContent = ` ${Math.round(this.windSpeed)} m/s`;
+    }
 
 
     toggleClassess(firstClassName, secondClassName){
