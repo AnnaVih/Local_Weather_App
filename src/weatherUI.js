@@ -213,7 +213,7 @@ export class WeatherUI {
 
     convertTimeStampDateToLocalDate(dataOffsets, timeStampData) {
         //1. get DST and time zone offsets in milliseconds
-        const offsets = dataOffsets.dstOffset * 1000 + Math.abs(dataOffsets.rawOffset) * 1000 ;
+        const offsets = dataOffsets.dstOffset * 1000 + dataOffsets.rawOffset * 1000 ;
 
         //2. Date object containing current time of target location
         const localdate = new Date(timeStampData * 1000 + offsets);
