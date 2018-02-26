@@ -62,6 +62,17 @@
   <!-- End container -->
   
   
+  <!-- Add Google place api for autocomplete cities -->
+  <script>
+      function activateCitySearch() {
+        const cityInput = document.getElementById('search-city');
+        const autocomplete = new google.maps.places.Autocomplete(cityInput);
+        console.log(autocomplete);
+      }
+  </script>
+  
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0PhE7SvYuF4ixC6-V5gySBcHBLathR8c
+    &libraries=places&callback=activateCitySearch"></script>
   
   <script src="js/app.bundle.js"></script>
 </body>
