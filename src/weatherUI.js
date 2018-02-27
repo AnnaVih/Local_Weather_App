@@ -2,9 +2,9 @@
 
 export class WeatherUI {
     constructor() {
-                this.html       = document.querySelector('html');
-                this.dinamicDiv = document.querySelector('#dinamic-content');
-                this.cityInput  = document.querySelector('#search-city');
+                this.html         = document.querySelector('html');
+                this.dinamicDiv   = document.querySelector('#dinamic-content');
+                this.cityInput    = document.querySelector('#search-city');
                 this.wind;
                 this.temp;  
                 this.cityName;
@@ -13,6 +13,7 @@ export class WeatherUI {
                 this.celcius;
                 this.fahrenheit; 
                 this.windSpeed;
+                this.windDirection;
                 this.latitude;
                 this.longitude;
                 this.timeStamp;
@@ -23,7 +24,7 @@ export class WeatherUI {
                 this.minutes; 
                 this.sunRise;
                 this.sunSet; 
-                   
+
     }
 
 
@@ -64,6 +65,7 @@ export class WeatherUI {
         }
     }
 
+
     getResponseValueFromWeather(weather){
         //1.Call Local time stamp method
         this.setLocalTimeStamp();
@@ -81,6 +83,10 @@ export class WeatherUI {
 
         //5. Set wind value in metric
         this.windSpeed = weather.wind.speed;
+
+        //6. Set wind direction in degrees
+        this.windDirection = weather.wind.deg;
+
     }
 
 
@@ -114,7 +120,7 @@ export class WeatherUI {
                     <p><span class="weather-forecast">Humidity:</span> ${weather.main.humidity}%</p>
                 </div>
                 <div class="col-6 col-md-3">
-                    <p><span class="weather-forecast">Wind:</span><span id="wind"> ${this.windSpeed} m/s</span></p>
+                    <p><span class="weather-forecast">Wind:</span><span><i class="fas fa-arrow-left wind-arrow" id="wind-direction-arrow"></i></span><span id="wind"> ${this.windSpeed} m/s</span></p>
                     <p><span class="weather-forecast">Sunrise:</span> ${this.sunRise}</p>
                     <p><span class="weather-forecast">Sunset:</span> ${this.sunSet}</p>
                 </div>
@@ -124,16 +130,28 @@ export class WeatherUI {
         this.dinamicDiv.innerHTML = dinamicContent;
 
         //8.Get selectors and attach them to this constructor class for future usage
-        this.cityName    = documentEl.querySelector('#cityName');
-        this.temperature = documentEl.querySelector('#temperature');
-        this.unitsType   = documentEl.querySelectorAll('.units-type');
-        this.celcius     = documentEl.querySelector('#celcius');
-        this.fahrenheit  = documentEl.querySelector('#fahrenheit');
-        this.wind        = documentEl.querySelector('#wind');
+        this.cityName     = documentEl.querySelector('#cityName');
+        this.temperature  = documentEl.querySelector('#temperature');
+        this.unitsType    = documentEl.querySelectorAll('.units-type');
+        this.celcius      = documentEl.querySelector('#celcius');
+        this.fahrenheit   = documentEl.querySelector('#fahrenheit');
+        this.wind         = documentEl.querySelector('#wind');
+        this.windDirArrow = document.querySelector('#wind-direction-arrow');
+
+        //6. Set wind direction arrow 
+        this.setArrowIconForWindDirection();
 
         //9.Clear input field 
         this.cityInput.value = '';
 
+    }
+
+
+    addBackgroundImage() {
+        //1.Check for current time if it between sun rise and sun set make dinamic background image
+        `${this.hour}:${this.minutes}` > this.sunRise && `${this.hour}:${this.minutes}` < this.sunSet 
+                                                ? this.html.style.background = 'url("images/day.jpg")'
+                                                : this.html.style.background = 'url("images/night.jpg")';  
     }
 
 
@@ -181,11 +199,9 @@ export class WeatherUI {
         }
     }
 
-    addBackgroundImage() {
-        //1.Check for current time if it between sun rise and sun set make dinamic background image
-        `${this.hour}:${this.minutes}` > this.sunRise && `${this.hour}:${this.minutes}` < this.sunSet 
-                                                ? this.html.style.background = 'url("images/day.jpg")'
-                                                : this.html.style.background = 'url("images/night.jpg")';  
+    setArrowIconForWindDirection() {
+        console.log(this.windDirArrow, this.windDirection);
+        console.log(this.windDirArrow.style.transform = `rotate(${this.windDirection}deg)`);
     }
 
 
@@ -196,6 +212,7 @@ export class WeatherUI {
         //2.Set timestamp current UTC date/time expressed as seconds since midnight, January 1, 1970 UTC
         this.timeStamp = targetDate.getTime()/1000 + targetDate.getTimezoneOffset() * 60;
     }
+
 
     getLocalTimeInRequestedCity(offSetsData) {
         //1. Call function for getting day, hour and minutes
@@ -211,6 +228,7 @@ export class WeatherUI {
         this.minutes = localDate.minutes;
     }
 
+
     setSunSetAndSunriseTime(offSetsData) {
        //1. Call function for getting sunrise hours and minutes
        const localSunRiseDate = this.convertTimeStampDateToLocalDate(offSetsData, this.sunRiseTimeStamp);
@@ -222,6 +240,7 @@ export class WeatherUI {
         this.sunRise =  `${localSunRiseDate.hours}:${localSunRiseDate.minutes}`;
         this.sunSet  =  `${localSunSetDate.hours}:${localSunSetDate.minutes}`;
     }
+
 
     convertTimeStampDateToLocalDate(dataOffsets, timeStampData) {
         //1. get DST and time zone offsets in milliseconds
