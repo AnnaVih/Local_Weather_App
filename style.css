@@ -1,4 +1,16 @@
+:root {
+    --main-color: rgb(54, 54, 54);
+    --light-opacity-black: rgba(0, 0, 0, .1);
+    --dark-opacity-black: rgba(0, 0, 0, .8);
+    --dark-opacity-white: rgba(255, 255, 255, .8);
+    --alert-background: rgba(255, 114, 114, 0.705);
+    --light-black: rgb(34, 33, 33);
+    --grey: rgb(128, 128, 128);
+    --white: rgb(255, 255, 255);
+}
+
 /* General style */
+
 * {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -6,7 +18,7 @@
     padding: 0;
 }
 
-html{
+html {
     background: url('images/weather.jpeg');
     background-size: cover !important;
     background-position: 100% 100% !important;
@@ -18,7 +30,7 @@ html{
 
 body {
     font-size: 16px;
-    color: rgb(54, 54, 54);
+    color: var(--main-color);
     font-family: Arial, Helvetica, sans-serif;
     line-height: 0.9;
     width: 100%;
@@ -27,7 +39,7 @@ body {
     top: 0;
     left: 0;
     margin: 0;
-    background: rgba(0, 0, 0, .1);
+    background: var(--light-opacity-black);
 }
 
 p {
@@ -37,8 +49,8 @@ p {
 /* Buttons */
 
 input[type="text"] {
-    -webkit-appearance:none;
-    -webkit-border-radius:0; 
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
 }
 
 button {
@@ -46,20 +58,23 @@ button {
     outline: 0;
 }
 
-.units-type, button {
-    color: grey;
+.units-type,
+button {
+    color: var(--grey);
     cursor: pointer;
 }
 
-#search-btn,#my-geolocation-btn, #gitHub-btn {
+#search-btn,
+#my-geolocation-btn,
+#gitHub-btn {
     -o-transition: all .6s ease-in-out;
-    -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
+    -webkit-box-shadow: 0 6px 10px 0 var(--light-opacity-black);
     -webkit-transition: all .6s ease-in-out;
     transition: all .6s ease-in-out;
-    background:  grey;
+    background: var(--grey);
     border: 0;
-    box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
-    color: white;
+    box-shadow: 0 6px 10px 0 var(--light-opacity-black);
+    color: var(--white);
     font-style: italic;
     outline: 0;
 }
@@ -68,12 +83,14 @@ button {
     top: -7px;
 }
 
-
-#my-geolocation-btn, #gitHub-btn {
+#my-geolocation-btn,
+#gitHub-btn {
     padding: 9px 17px;
 }
 
-#my-geolocation-btn, #search-city, .city-input-span {
+#my-geolocation-btn,
+#search-city,
+.city-input-span {
     width: 200px;
     position: relative;
     text-align: left;
@@ -85,21 +102,20 @@ button {
 #gitHub-btn:focus,
 #search-btn:hover,
 #search-btn:focus {
-    color: #fff;
+    color: var(--white);
     outline: 0;
 }
 
 #my-geolocation-btn:hover,
 #gitHub-btn:hover,
 #search-btn:hover {
-    background:  rgba(0, 0, 0 , .8);
+    background: var(--dark-opacity-black);
 }
 
 .btn-outline-secondary:focus {
     box-shadow: none;
     -webkit-box-shadow: none;
 }
-
 
 /* Icons */
 
@@ -109,17 +125,18 @@ button {
     width: 50px;
 }
 
-#location-icon, #search-btn {
-  position: absolute;
-  right: 0;
-  height: 32px;
-  width: 50px;
+#location-icon,
+#search-btn {
+    position: absolute;
+    right: 0;
+    height: 32px;
+    width: 50px;
 }
 
 #location-icon {
     top: 0;
-    background: white;
-    color: grey;
+    background: var(--white);
+    color: var(--grey);
     text-align: center;
     padding-top: 5px;
 }
@@ -131,9 +148,9 @@ button {
 /* Input */
 
 #search-city {
-    box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
-    -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
-    background: #fff;
+    box-shadow: 0 6px 10px 0 var(--light-opacity-black);
+    -webkit-box-shadow: 0 6px 10px 0 var(--light-opacity-black);
+    background: var(--white);
     border: 0;
     font-style: italic;
     outline: 0;
@@ -146,35 +163,37 @@ h1.freeCodeCamp-app {
     font-size: 3.5rem;
 }
 
-
-#temperature, .units-type.active, .or-span {
+#temperature,
+.units-type.active,
+.or-span {
     font-size: 2rem;
 }
 
 .weather-screen {
     -webkit-box-shadow: 0 3px 19px -1px;
-    background-color: rgba(255, 255, 255, .8);
+    background-color: var(--dark-opacity-white);
     box-shadow: 0 3px 19px -1px;
-    margin: 15vh auto ;
+    margin: 15vh auto;
     min-height: 30vh;
-    position:relative;
+    position: relative;
     max-width: 800px;
     min-width: 290px;
 }
 
-.freeCodeCamp-app, #temperature, .find-weather-by {
-    color: rgb(34, 33, 33); 
-    font-family: 'Helvetica Neue', sans-serif; 
-    font-weight: bold; 
-    letter-spacing: -1px; 
-    line-height: 1.3; 
-    text-align: center; 
-    text-shadow: 1px 0px 4px white;
+.freeCodeCamp-app,
+#temperature,
+.find-weather-by {
+    color: var(--light-black);
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+    letter-spacing: -1px;
+    line-height: 1.3;
+    text-align: center;
+    text-shadow: 1px 0px 4px var(--white);
 }
 
-
 .weather-description {
-    color: rgb(54, 54, 54);
+    color: var(--main-color);
     font-size: 17px;
     font-weight: 100;
     margin-left: 25%;
@@ -188,16 +207,16 @@ h1.freeCodeCamp-app {
 }
 
 .units-type.active {
-    color: black;
+    color: var(--light-black);
     font-weight: 500;
 }
 
 .alert-message {
-    background:  rgba(255, 114, 114, 0.705);
+    background: var(--alert-background);
     border: 0;
-    -webkit-box-shadow: 0 6px 10px 0 rgba(221, 54, 54, 0.1);
-            box-shadow: 0 6px 10px 0 rgba(221, 54, 54, 0.1);
-    color: rgb(66, 5, 5);
+    -webkit-box-shadow: 0 6px 10px 0 var(--light-opacity-black);
+    box-shadow: 0 6px 10px 0 var(--light-opacity-black);
+    color: var(--light-black);
     padding: 12px 17px;
     line-height: 1.1;
 }
@@ -206,65 +225,58 @@ h1.freeCodeCamp-app {
     width: 100%;
 }
 
-
 /************* MEDIA QUERIES *****************
 *********************************************/
 
-@media only screen  and (max-width: 767px) { 
-    html{
+@media only screen and (max-width: 767px) {
+    html {
         background-attachment: unset !important;
     }
-    
-
     body {
         font-size: 13px;
     }
-
     .weather-screen {
         width: 100%;
         margin: 5% auto;
     }
-
-    #my-geolocation-btn, #search-city {
+    #my-geolocation-btn,
+    #search-city {
         width: 100%;
     }
-
     #search-city {
         margin: 0 !important;
     }
-
-    #location-icon, #search-btn{
+    #location-icon,
+    #search-btn {
         height: 31px;
         width: 100px;
     }
-
     h1.freeCodeCamp-app {
         font-size: 2rem;
     }
-
-    #temperature, .units-type.active, .or-span, .freeCodeCamp-app {
+    #temperature,
+    .units-type.active,
+    .or-span,
+    .freeCodeCamp-app {
         font-size: 1.4rem;
     }
-
 }
 
-@media only screen  and (max-width: 500px) { 
+@media only screen and (max-width: 500px) {
     html {
-        background-attachment: unset!important;
+        background-attachment: unset !important;
         background-size: unset !important;
         background-position: initial !important;
     }
-
     #gitHub-section {
         margin-top: 5% !important;
     }
 }
 
-@media only screen  and (max-width: 750px) and (max-height: 500px) { 
+@media only screen and (max-width: 750px) and (max-height: 500px) {
     html {
-        background-attachment: unset!important;
+        background-attachment: unset !important;
         background-size: unset !important;
         background-position: initial !important;
     }
 }
-
