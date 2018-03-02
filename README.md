@@ -32,6 +32,7 @@ $ npm run build
 
 Create config.js file in root direcotory with config object. Put there your own Api keys.
 
+
 ##Contributors
 
 Anna Vihrogonova annavihrogonova@yahoo.com
